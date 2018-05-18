@@ -1,0 +1,44 @@
+<resources>
+    <string name="app_name">Lancer Scout</string>
+    <string name="crossed_auto_line">Crossed Auto Line</string>
+    <string name="autonomous">Autonomous</string>
+    <string name="right">Right</string>
+    <string name="middle">Middle</string>
+    <string name="left">Left</string>
+    <string name="starting_configuration">Starting Configuration</string>
+    <string name="red_alliance">Red Alliance</string>
+    <string name="blue_alliance">Blue Alliance</string>
+    <string name="alliance_color">Alliance Color</string>
+    <string name="team_number">Team Number</string>
+    <string name="current_match_number">Current Match Number</string>
+    <string name="match_number">Match Number</string>
+    <string name="match_scouting">Match Scouting</string>
+    <string name="cube_on_wrong_side_of_switch_scale">Cube on wrong side of switch/scale</string>
+    <string name="teleop">TeleOp</string>
+    <string name="send">Send</string>
+    <string name="alliance_switch">Alliance Switch</string>
+    <string name="minus">-</string>
+    <string name="zero">0</string>
+    <string name="plus">+</string>
+    <string name="reset">Reset</string>
+
+    <string-array name="AutoCubeAttempts">
+        <item>No Cube Attempt</item>
+        <item>Attempted Switch</item>
+        <item>Attempted Scale</item>
+        <item>Successful Switch</item>
+        <item>Successful Scale</item>
+    </string-array>
+
+    <string-array name="EndGameAttempts">
+        <item>Not parked on platform</item>
+        <item>Parked on platform</item>
+        <item>Attempted to hook onto bar</item>
+        <item>Attempted to attach to a robot</item>
+        <item>Attempted to carry a robot</item>
+        <item>Hooked bar and attempted climb</item>
+        <item>Successful climb on another robot</item>
+        <item>Successful climb with another robot attached</item>
+        <item>Successful climb on own</item>
+    </string-array>
+</resources>
