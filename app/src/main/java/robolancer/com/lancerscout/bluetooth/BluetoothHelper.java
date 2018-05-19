@@ -15,13 +15,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
-
-import robolancer.com.lancerscout.R;
-import robolancer.com.lancerscout.activities.teams.MatchScoutingActivity;
 
 public class BluetoothHelper implements Runnable{
 
@@ -64,7 +59,7 @@ public class BluetoothHelper implements Runnable{
             try {
                 dialog.dismiss();
                 BluetoothDevice device = deviceList.get(which);
-                ParcelUuid uuid = new ParcelUuid(UUID.fromString("94f39d29-7d6d-437d-973b-fba39e49d4ed" + ""));
+                ParcelUuid uuid = new ParcelUuid(UUID.fromString("fba199f7-47a7-4ed4-b880-3073424d2e2c" + ""));
                 BluetoothSocket socket = device.createRfcommSocketToServiceRecord(uuid.getUuid());
                 bluetoothAdapter.cancelDiscovery();
                 Toast.makeText(context, "Connecting to " + device.getName(), Toast.LENGTH_LONG).show();
@@ -73,7 +68,7 @@ public class BluetoothHelper implements Runnable{
                 inStream = socket.getInputStream();
                 outputStream = socket.getOutputStream();
             } catch (IOException e) {
-                Toast.makeText(context, "Something went wrong with bluetooth", Toast.LENGTH_LONG).show();
+                Toast.makeText(context, "Can not connect for some reason! Please restart", Toast.LENGTH_LONG).show();
                 showBluetoothDevices();
             }
         }).show();

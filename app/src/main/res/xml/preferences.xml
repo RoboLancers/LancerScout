@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <ListPreference
+        android:defaultValue="Scouting Phone 1"
+        android:entries="@array/ScoutingPhoneNumbers"
+        android:entryValues="@array/ScoutingPhoneNumbers"
+        android:key="pref_scoutingPhoneNumber"
+        android:title="Scouting Phone Number" />
+</PreferenceScreen>

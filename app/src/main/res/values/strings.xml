@@ -41,4 +41,13 @@
         <item>Successful climb with another robot attached</item>
         <item>Successful climb on own</item>
     </string-array>
+
+    <string-array name="ScoutingPhoneNumbers">
+        <item>Scouting Phone 1</item>
+        <item>Scouting Phone 2</item>
+        <item>Scouting Phone 3</item>
+        <item>Scouting Phone 4</item>
+        <item>Scouting Phone 5</item>
+        <item>Scouting Phone 6</item>
+    </string-array>
 </resources>

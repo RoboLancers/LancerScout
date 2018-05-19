@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="#f1f5f8"
     android:orientation="vertical"
-    tools:context=".activities.teams.MatchScoutingActivity">
+    tools:context=".activities.MatchScoutingActivity">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/appbar"

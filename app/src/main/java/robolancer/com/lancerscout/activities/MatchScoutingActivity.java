@@ -1,16 +1,11 @@
-package robolancer.com.lancerscout.activities.teams;
+package robolancer.com.lancerscout.activities;
 
 import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothDevice;
-import android.bluetooth.BluetoothSocket;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.ParcelUuid;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -26,17 +21,12 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Objects;
-import java.util.Set;
-import java.util.UUID;
 
 import robolancer.com.lancerscout.R;
 import robolancer.com.lancerscout.bluetooth.BluetoothHelper;
 import robolancer.com.lancerscout.models.AllianceColor;
 import robolancer.com.lancerscout.models.AutonomousAttempt;
 import robolancer.com.lancerscout.models.EndGameAttempt;
-import robolancer.com.lancerscout.models.LancerMatch;
 import robolancer.com.lancerscout.models.LancerMatchBuilder;
 import robolancer.com.lancerscout.models.StartingConfiguration;
 
@@ -124,7 +114,7 @@ public class MatchScoutingActivity extends AppCompatActivity {
                             }
                         }).show();
                 break;
-            case R.id.reset:
+            case R.id.action_reset:
                 AlertDialog.Builder resetDialog = new AlertDialog.Builder(MatchScoutingActivity.this);
                 resetDialog.setTitle("Confirm Reset")
                         .setMessage("Are you sure you want to reset?")
@@ -133,6 +123,9 @@ public class MatchScoutingActivity extends AppCompatActivity {
                             reset();
                             bluetoothHelper.showBluetoothDevices();
                         }).show();
+                break;
+            case R.id.action_settings:
+                startActivity(new Intent(this, SettingsActivity.class));
                 break;
             default:
                 return super.onOptionsItemSelected(item);
