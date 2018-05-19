@@ -5,5 +5,6 @@
         android:entries="@array/ScoutingPhoneNumbers"
         android:entryValues="@array/ScoutingPhoneNumbers"
         android:key="pref_scoutingPhoneNumber"
-        android:title="Scouting Phone Number" />
+        android:title="Scouting Phone Number"
+        android:summary="%s"/>
 </PreferenceScreen>
