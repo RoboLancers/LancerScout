@@ -21,6 +21,7 @@
     <string name="zero">0</string>
     <string name="plus">+</string>
     <string name="reset">Reset</string>
+    <string name="settings">Settings</string>
 
     <string-array name="AutoCubeAttempts">
         <item>No Cube Attempt</item>

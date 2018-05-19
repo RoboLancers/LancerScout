@@ -29,6 +29,8 @@ public class BluetoothHelper implements Runnable{
     private Context context;
     private BluetoothAdapter bluetoothAdapter;
 
+    private AlertDialog dialog;
+
     public BluetoothHelper(Context context, BluetoothAdapter bluetoothAdapter){
         this.context = context;
         this.bluetoothAdapter = bluetoothAdapter;
@@ -55,7 +57,7 @@ public class BluetoothHelper implements Runnable{
         final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(context, android.R.layout.select_dialog_singlechoice);
         arrayAdapter.addAll(deviceName);
 
-        new AlertDialog.Builder(context).setAdapter(arrayAdapter, (dialog, which) -> {
+        dialog = new AlertDialog.Builder(context).setAdapter(arrayAdapter, (dialog, which) -> {
             try {
                 dialog.dismiss();
                 BluetoothDevice device = deviceList.get(which);
@@ -71,7 +73,7 @@ public class BluetoothHelper implements Runnable{
                 Toast.makeText(context, "Can not connect for some reason! Please restart", Toast.LENGTH_LONG).show();
                 showBluetoothDevices();
             }
-        }).show();
+        }).setCancelable(false).show();
     }
 
     @Override
@@ -135,4 +137,7 @@ public class BluetoothHelper implements Runnable{
     }
 
 
+    public AlertDialog getDialog() {
+        return dialog;
+    }
 }

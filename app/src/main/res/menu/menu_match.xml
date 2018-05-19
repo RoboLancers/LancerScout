@@ -4,20 +4,19 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/action_reset"
-        android:icon="@drawable/loop_white_24dp"
-        android:title="@string/reset"
-        app:showAsAction="ifRoom" />
-
-    <item
         android:id="@+id/action_send"
         android:icon="@drawable/send_white_24dp"
         android:title="@string/send"
         app:showAsAction="always" />
 
     <item
-    android:id="@+id/action_settings"
-    android:icon="@drawable/settings_black_24dp"
-    android:title="Settings"
-    app:showAsAction="never" />
+        android:id="@+id/action_reset"
+        android:icon="@drawable/loop_white_24dp"
+        android:title="@string/reset"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_settings"
+        android:title="@string/settings"
+        app:showAsAction="never" />
 </menu>
