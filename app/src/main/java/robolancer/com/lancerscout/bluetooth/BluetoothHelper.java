@@ -66,7 +66,7 @@ public class BluetoothHelper implements Runnable{
                 BluetoothDevice device = deviceList.get(which);
                 ParcelUuid uuid = new ParcelUuid(UUID.fromString("94f39d29-7d6d-437d-973b-fba39e49d4ed" + ""));
                 BluetoothSocket socket = device.createRfcommSocketToServiceRecord(uuid.getUuid());
-                //bluetoothAdapter.cancelDiscovery();
+                bluetoothAdapter.cancelDiscovery();
                 Toast.makeText(context, "Connecting to " + device.getName(), Toast.LENGTH_LONG).show();
                 socket.connect();
                 Toast.makeText(context, "Connected", Toast.LENGTH_LONG).show();
@@ -74,7 +74,7 @@ public class BluetoothHelper implements Runnable{
                 outputStream = socket.getOutputStream();
             } catch (IOException e) {
                 Toast.makeText(context, "Something went wrong with bluetooth", Toast.LENGTH_LONG).show();
-                e.printStackTrace();
+                showBluetoothDevices();
             }
         }).show();
     }
