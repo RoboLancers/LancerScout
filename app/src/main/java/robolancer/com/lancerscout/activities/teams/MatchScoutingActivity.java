@@ -78,10 +78,15 @@ public class MatchScoutingActivity extends AppCompatActivity {
         }
 
         bluetoothHelper = new BluetoothHelper(this, bluetoothAdapter);
-        bluetoothHelper.showBluetoothDevices();
 
         Thread thread = new Thread(bluetoothHelper);
         thread.start();
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        bluetoothHelper.showBluetoothDevices();
     }
 
     @Override

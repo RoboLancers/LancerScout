@@ -40,7 +40,6 @@ public class BluetoothHelper implements Runnable{
     }
 
     public void showBluetoothDevices(){
-        //AlertDialog.Builder builder = new AlertDialog.Builder(context);
         ArrayList<BluetoothDevice> deviceList = new ArrayList<>();
         ArrayList<String> deviceName = new ArrayList<>();
 
