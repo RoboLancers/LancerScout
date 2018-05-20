@@ -66,7 +66,7 @@ public class BluetoothHelper implements Runnable{
             try {
                 dialog.dismiss();
                 BluetoothDevice device = deviceList.get(which);
-                ParcelUuid uuid = new ParcelUuid(UUID.fromString(getUUID() + ""));
+                ParcelUuid uuid = new ParcelUuid(UUID.fromString("fba199f7-47a7-4ed4-b880-3073424d2e2c" + ""));
                 BluetoothSocket socket = device.createRfcommSocketToServiceRecord(uuid.getUuid());
                 bluetoothAdapter.cancelDiscovery();
                 Toast.makeText(context, "Connecting to " + device.getName(), Toast.LENGTH_LONG).show();
@@ -79,26 +79,6 @@ public class BluetoothHelper implements Runnable{
                 showBluetoothDevices();
             }
         }).setCancelable(false).show();
-    }
-
-    public String getUUID(){
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        switch(sharedPreferences.getString("pref_scoutingPhoneNumber", "")){
-            case "Scouting Phone 1":
-                return "fba199f7-47a7-4ed4-b880-3073424d2e2c";
-            case "Scouting Phone 2":
-                return "2e02adb8-9ce7-45ee-9810-5ec6f3fff542";
-            case "Scouting Phone 3":
-                return "c2c7e59e-d5d5-4c70-a565-06f74f9d54cf";
-            case "Scouting Phone 4":
-                return "d33724ac-4c4c-4acf-a309-e3567acefbf8";
-            case "Scouting Phone 5":
-                return "126a612f-2ff3-4a81-a159-596c3a1ecfe8";
-            case "Scouting Phone 6":
-                return "0e2f69a9-16d1-4283-b00b-a246ac96fc93";
-            default:
-                return "";
-        }
     }
 
     @Override
