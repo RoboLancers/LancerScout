@@ -5,6 +5,8 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.os.Message;
 import android.os.ParcelUuid;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
@@ -21,6 +23,7 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
+import robolancer.com.lancerscout.activities.MatchScoutingActivity;
 import robolancer.com.lancerscout.activities.SettingsActivity;
 
 public class BluetoothHelper implements Runnable{
@@ -103,9 +106,16 @@ public class BluetoothHelper implements Runnable{
     }
 
     private void processCommand(String command) {
+        Log.e("BluetoothHelper", command);
         switch (command) {
-            case "ADDTEAM":
-                Log.e("BluetoothHelper", "ADDED TEAM");
+            case "disconnect":
+                Message msg = MatchScoutingActivity.handler.obtainMessage();
+                Bundle bundle = new Bundle();
+                bundle.putCharSequence("disconnect", "true");
+                msg.setData(bundle);
+                MatchScoutingActivity.handler.sendMessage(msg);
+
+                Log.e("BluetoothHelper", "Disconnected");
                 break;
             default:
                 Log.e("BluetoothHelper", "Received " + command);
@@ -121,8 +131,6 @@ public class BluetoothHelper implements Runnable{
     public void write(String command) throws IOException {
         if(outputStream != null) {
             if (command != null && !command.isEmpty()) {
-                outputStream.write("MATCH".getBytes());
-                outputStream.write(0);
                 outputStream.write(command.getBytes());
                 outputStream.write(0);
             }

@@ -1,7 +1,10 @@
 package robolancer.com.lancerscout.activities;
 
+import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -21,6 +24,7 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 
 import java.io.IOException;
+import java.util.Objects;
 
 import robolancer.com.lancerscout.R;
 import robolancer.com.lancerscout.bluetooth.BluetoothHelper;
@@ -33,7 +37,7 @@ import robolancer.com.lancerscout.models.StartingConfiguration;
 public class MatchScoutingActivity extends AppCompatActivity {
 
     BluetoothAdapter bluetoothAdapter;
-    BluetoothHelper bluetoothHelper;
+    static BluetoothHelper bluetoothHelper;
 
     EditText matchNumber, teamNumber;
     RadioGroup allianceColor, startingConfiguration;
@@ -50,6 +54,8 @@ public class MatchScoutingActivity extends AppCompatActivity {
     EditText comments;
 
     Toolbar appbar;
+
+    Thread bluetoothThread;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,9 +75,18 @@ public class MatchScoutingActivity extends AppCompatActivity {
 
         bluetoothHelper = new BluetoothHelper(this, bluetoothAdapter);
 
-        Thread thread = new Thread(bluetoothHelper);
-        thread.start();
+        bluetoothThread = new Thread(bluetoothHelper);
+        bluetoothThread.start();
     }
+
+    public static Handler handler = new Handler(msg -> {
+        if(Objects.requireNonNull(msg.getData().getCharSequence("disconnect")).toString().equals("true")){
+            bluetoothHelper.showBluetoothDevices();
+            return true;
+        }
+
+        return false;
+    });
 
     @Override
     protected void onResume(){
@@ -86,6 +101,11 @@ public class MatchScoutingActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onStop(){
+        super.onStop();
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_send:
@@ -95,6 +115,7 @@ public class MatchScoutingActivity extends AppCompatActivity {
                         .setNegativeButton("Cancel", (dialog, which) -> dialog.cancel())
                         .setPositiveButton("Ok", (dialog, which) -> {
                             try {
+                                bluetoothHelper.write("MATCH");
                                 bluetoothHelper.write(new Gson().toJson(new LancerMatchBuilder()
                                         .setMatchNumber(Integer.parseInt(matchNumber.getText().toString()))
                                         .setTeamNumber(Integer.parseInt(teamNumber.getText().toString()))
