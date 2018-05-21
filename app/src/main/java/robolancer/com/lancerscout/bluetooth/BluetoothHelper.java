@@ -78,7 +78,7 @@ public class BluetoothHelper implements Runnable{
                 inStream = socket.getInputStream();
                 outputStream = socket.getOutputStream();
             } catch (IOException e) {
-                Toast.makeText(context, "Can not connect for some reason! Please restart", Toast.LENGTH_LONG).show();
+                Toast.makeText(context, "Can not connect to Lancer Scout Server! Please check if server is open. If it is please contact nearest programmer", Toast.LENGTH_LONG).show();
                 showBluetoothDevices();
             }
         }).setCancelable(false).show();
