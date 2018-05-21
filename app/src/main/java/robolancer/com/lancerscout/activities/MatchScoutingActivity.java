@@ -1,12 +1,17 @@
 package robolancer.com.lancerscout.activities;
 
 import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -68,6 +73,15 @@ public class MatchScoutingActivity extends AppCompatActivity {
 
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
+        if(bluetoothAdapter == null){
+            new AlertDialog.Builder(this)
+                    .setTitle("Not compatible")
+                    .setMessage("Your phone does not support Bluetooth")
+                    .setPositiveButton("Exit", (dialog, which) -> System.exit(0))
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
+        }
+
         if(!bluetoothAdapter.isEnabled()) {
             startActivityForResult(new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE), 0);
         }
@@ -79,6 +93,17 @@ public class MatchScoutingActivity extends AppCompatActivity {
 
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     }
+
+    private final BroadcastReceiver receiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if(BluetoothDevice.ACTION_FOUND.equals(action)){
+                BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+                Log.e("BluetoothDevice", "Device found: " + device.getName() + "; MAC " + device.getAddress());
+            }
+        }
+    };
 
     public static Handler handler = new Handler(msg -> {
         if(Objects.requireNonNull(msg.getData().getCharSequence("disconnect")).toString().equals("true")){
@@ -98,7 +123,7 @@ public class MatchScoutingActivity extends AppCompatActivity {
     @Override
     protected void onPause(){
         super.onPause();
-        bluetoothHelper.getDialog().cancel();
+        //bluetoothHelper.getDialog().cancel();
     }
 
     @Override
@@ -116,8 +141,7 @@ public class MatchScoutingActivity extends AppCompatActivity {
                         .setNegativeButton("Cancel", (dialog, which) -> dialog.cancel())
                         .setPositiveButton("Ok", (dialog, which) -> {
                             try {
-                                bluetoothHelper.write("MATCH");
-                                bluetoothHelper.write(new Gson().toJson(new LancerMatchBuilder()
+                                String json = new Gson().toJson(new LancerMatchBuilder()
                                         .setMatchNumber(Integer.parseInt(matchNumber.getText().toString()))
                                         .setTeamNumber(Integer.parseInt(teamNumber.getText().toString()))
                                         .setColor(getAllianceColor())
@@ -132,7 +156,9 @@ public class MatchScoutingActivity extends AppCompatActivity {
                                         .setEndGameAttempt((EndGameAttempt)endGameAttempt.getSelectedItem())
                                         .setBrokeDown(brokenRobotBox.isChecked())
                                         .setComment(comments.getText().toString())
-                                        .createLancerMatch()));
+                                        .createLancerMatch());
+
+                                bluetoothHelper.write("MATCH" + json);
                                 reset();
                             } catch (IOException e) {
                                 e.printStackTrace();

@@ -1,5 +1,6 @@
 package robolancer.com.lancerscout.bluetooth;
 
+import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
@@ -11,7 +12,10 @@ import android.os.ParcelUuid;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
@@ -23,6 +27,7 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
+import robolancer.com.lancerscout.R;
 import robolancer.com.lancerscout.activities.MatchScoutingActivity;
 import robolancer.com.lancerscout.activities.SettingsActivity;
 
@@ -150,7 +155,7 @@ public class BluetoothHelper implements Runnable{
     }
 
 
-    public AlertDialog getDialog() {
-        return dialog;
-    }
+//    public AlertDialog getDialog() {
+//        return dialog;
+//    }
 }
