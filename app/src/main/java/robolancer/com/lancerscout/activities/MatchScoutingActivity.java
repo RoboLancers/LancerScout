@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -77,6 +78,8 @@ public class MatchScoutingActivity extends AppCompatActivity {
 
         bluetoothThread = new Thread(bluetoothHelper);
         bluetoothThread.start();
+
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     }
 
     public static Handler handler = new Handler(msg -> {
@@ -260,6 +263,8 @@ public class MatchScoutingActivity extends AppCompatActivity {
 
         endGameAttempt.setSelection(0, true);
         brokenRobotBox.setChecked(false);
+
+        comments.getText().clear();
 
         matchNumber.requestFocus();
     }
