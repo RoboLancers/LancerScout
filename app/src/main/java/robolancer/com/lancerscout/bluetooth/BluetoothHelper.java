@@ -1,21 +1,18 @@
 package robolancer.com.lancerscout.bluetooth;
 
-import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
+import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.SharedPreferences;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Message;
 import android.os.ParcelUuid;
-import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
@@ -23,18 +20,15 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
-import robolancer.com.lancerscout.R;
 import robolancer.com.lancerscout.activities.MatchScoutingActivity;
-import robolancer.com.lancerscout.activities.SettingsActivity;
 
 public class BluetoothHelper implements Runnable{
 
     private OutputStream outputStream;
-    private InputStream inStream;
+    private InputStream inputStream;
 
     private byte[] byteCommand;
     private String command;
@@ -42,67 +36,140 @@ public class BluetoothHelper implements Runnable{
     private Context context;
     private BluetoothAdapter bluetoothAdapter;
 
-    private AlertDialog dialog;
+    private AlertDialog pairedDeviceDialog, discoveredDeviceDialog;
+
+    private BluetoothSocket socket;
 
     public BluetoothHelper(Context context, BluetoothAdapter bluetoothAdapter){
         this.context = context;
         this.bluetoothAdapter = bluetoothAdapter;
     }
 
-    public void showBluetoothDevices(){
-        ArrayList<BluetoothDevice> deviceList = new ArrayList<>();
-        ArrayList<String> deviceName = new ArrayList<>();
+    public void showPairedBluetoothDevices(boolean send, String data){
+        ArrayList<BluetoothDevice> pairedDeviceList = new ArrayList<>();
+        ArrayList<String> pairedDeviceName = new ArrayList<>();
 
         if (bluetoothAdapter != null) {
             if (bluetoothAdapter.isEnabled()) {
                 Set<BluetoothDevice> bondedDevices = bluetoothAdapter.getBondedDevices();
 
                 if(bondedDevices.size() > 0) {
-                    deviceList.addAll(bondedDevices);
+                    pairedDeviceList.addAll(bondedDevices);
                 }
             }
         }
 
-        for(BluetoothDevice device : deviceList){
-            deviceName.add(device.getName());
+        for(BluetoothDevice device : pairedDeviceList){
+            pairedDeviceName.add(device.getName());
         }
 
-        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(context, android.R.layout.select_dialog_singlechoice);
-        arrayAdapter.addAll(deviceName);
+        ArrayAdapter<String> pairedDeviceAdapter = new ArrayAdapter<>(context, android.R.layout.select_dialog_singlechoice);
+        pairedDeviceAdapter.addAll(pairedDeviceName);
+        pairedDeviceAdapter.add("Not on screen");
 
-        dialog = new AlertDialog.Builder(context).setAdapter(arrayAdapter, (dialog, which) -> {
-            try {
+        pairedDeviceDialog = new AlertDialog.Builder(context).setAdapter(pairedDeviceAdapter, (dialog, which) -> {
+            if(pairedDeviceAdapter.getItem(which).equals("Not on screen")){
                 dialog.dismiss();
-                BluetoothDevice device = deviceList.get(which);
+                showDiscoveredBluetooth(send, data);
+            }else {
+                try {
+                    dialog.dismiss();
+                    BluetoothDevice device = pairedDeviceList.get(which);
+                    ParcelUuid uuid = new ParcelUuid(UUID.fromString("fba199f7-47a7-4ed4-b880-3073424d2e2c" + ""));
+                    socket = device.createRfcommSocketToServiceRecord(uuid.getUuid());
+                    bluetoothAdapter.cancelDiscovery();
+                    Toast.makeText(context, "Connecting to " + device.getName(), Toast.LENGTH_LONG).show();
+                    socket.connect();
+                    Toast.makeText(context, "Connected", Toast.LENGTH_LONG).show();
+                    inputStream = socket.getInputStream();
+                    outputStream = socket.getOutputStream();
+
+                    if(send){
+                        write(data);
+                    }
+                    Toast.makeText(context, "Sent", Toast.LENGTH_LONG).show();
+
+                    socket.close();
+                } catch (IOException e) {
+                    Toast.makeText(context, "Can not connect to Lancer Scout Server! Please check if server is open or try again.", Toast.LENGTH_LONG).show();
+                    showPairedBluetoothDevices(send, data);
+                }
+            }
+        }).show();
+    }
+
+    private void showDiscoveredBluetooth(boolean send, String data){
+        final ArrayAdapter<String> discoveredDeviceAdapter = new ArrayAdapter<>(context, android.R.layout.select_dialog_singlechoice);
+        ArrayList<BluetoothDevice> discoveredDevices = new ArrayList<>();
+        ArrayList<String> discoveredDevicesName = new ArrayList<>();
+
+        discoveredDeviceDialog = new AlertDialog.Builder(context).setAdapter(discoveredDeviceAdapter, (dialog, which) -> {
+            try {
+                discoveredDeviceDialog.dismiss();
+                BluetoothDevice device = discoveredDevices.get(which);
+
+                discoveredDevices.clear();
+                discoveredDevicesName.clear();
+
                 ParcelUuid uuid = new ParcelUuid(UUID.fromString("fba199f7-47a7-4ed4-b880-3073424d2e2c" + ""));
-                BluetoothSocket socket = device.createRfcommSocketToServiceRecord(uuid.getUuid());
+                socket = device.createRfcommSocketToServiceRecord(uuid.getUuid());
                 bluetoothAdapter.cancelDiscovery();
                 Toast.makeText(context, "Connecting to " + device.getName(), Toast.LENGTH_LONG).show();
                 socket.connect();
                 Toast.makeText(context, "Connected", Toast.LENGTH_LONG).show();
-                inStream = socket.getInputStream();
+                inputStream = socket.getInputStream();
                 outputStream = socket.getOutputStream();
+
+                if(send){
+                    write(data);
+                }
+                Toast.makeText(context, "Sent", Toast.LENGTH_LONG).show();
+
+                socket.close();
             } catch (IOException e) {
                 Toast.makeText(context, "Can not connect to Lancer Scout Server! Please check if server is open. If it is please contact nearest programmer", Toast.LENGTH_LONG).show();
-                showBluetoothDevices();
+                showDiscoveredBluetooth(send, data);
             }
-        }).setCancelable(false).show();
+        }).show();
+
+        Toast.makeText(context, "Searching...", Toast.LENGTH_LONG).show();
+        bluetoothAdapter.startDiscovery();
+        final BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+            public void onReceive(Context context, Intent intent) {
+                String action = intent.getAction();
+
+                if(BluetoothDevice.ACTION_FOUND.equals(action)){
+                    BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+
+                    if(device != null && device.getName() != null && !device.getName().equals("")) {
+                        Log.e("BluetoothHelper", device.getName());
+                        ArrayAdapter<String> discoveredDeviceAdapter = new ArrayAdapter<>(context, android.R.layout.select_dialog_singlechoice);
+                        discoveredDevices.add(device);
+                        discoveredDevicesName.add(device.getName());
+                        discoveredDeviceAdapter.addAll(discoveredDevicesName);
+                        discoveredDeviceDialog.getListView().setAdapter(discoveredDeviceAdapter);
+                    }
+                }
+            }
+        };
+
+        IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
+        context.registerReceiver(broadcastReceiver, filter);
     }
 
     @Override
     public void run(){
         try {
+            if(socket != null) {
+                inputStream = socket.getInputStream();
+                outputStream = socket.getOutputStream();
+            }
+
+            Log.e("BluetoothHelper","Waiting for input");
+
             while (true) {
-                if (inStream != null) {
-                    byteCommand = readByteArrayCommand(inStream);
-                    command = new String(byteCommand);
-
-                    if(command.equals("")){
-                        Log.e("BluetoothHelper", "Exit Command Received. Finished");
-                        break;
-                    }
-
-                    processCommand(command);
+                if (inputStream != null) {
+                    processCommand(new String(readByteArrayCommand(inputStream)));
                 }
             }
         }catch (IOException e){
@@ -113,15 +180,6 @@ public class BluetoothHelper implements Runnable{
     private void processCommand(String command) {
         Log.e("BluetoothHelper", command);
         switch (command) {
-            case "disconnect":
-                Message msg = MatchScoutingActivity.handler.obtainMessage();
-                Bundle bundle = new Bundle();
-                bundle.putCharSequence("disconnect", "true");
-                msg.setData(bundle);
-                MatchScoutingActivity.handler.sendMessage(msg);
-
-                Log.e("BluetoothHelper", "Disconnected");
-                break;
             default:
                 Log.e("BluetoothHelper", "Received " + command);
         }
@@ -154,8 +212,11 @@ public class BluetoothHelper implements Runnable{
         return byteArrayOutputStream.toByteArray();
     }
 
+    public AlertDialog getPairedDeviceDialog() {
+        return pairedDeviceDialog;
+    }
 
-//    public AlertDialog getDialog() {
-//        return dialog;
-//    }
+    public AlertDialog getDiscoveredDeviceDialog() {
+        return discoveredDeviceDialog;
+    }
 }

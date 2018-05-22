@@ -1,17 +1,12 @@
 package robolancer.com.lancerscout.activities;
 
 import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothDevice;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -38,7 +33,7 @@ import robolancer.com.lancerscout.models.EndGameAttempt;
 import robolancer.com.lancerscout.models.LancerMatchBuilder;
 import robolancer.com.lancerscout.models.StartingConfiguration;
 
-public class MatchScoutingActivity extends AppCompatActivity {
+public class MatchScoutingActivity extends AppCompatActivity{
 
     BluetoothAdapter bluetoothAdapter;
     static BluetoothHelper bluetoothHelper;
@@ -94,78 +89,65 @@ public class MatchScoutingActivity extends AppCompatActivity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     }
 
-    private final BroadcastReceiver receiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
-            if(BluetoothDevice.ACTION_FOUND.equals(action)){
-                BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-                Log.e("BluetoothDevice", "Device found: " + device.getName() + "; MAC " + device.getAddress());
-            }
-        }
-    };
-
-    public static Handler handler = new Handler(msg -> {
-        if(Objects.requireNonNull(msg.getData().getCharSequence("disconnect")).toString().equals("true")){
-            bluetoothHelper.showBluetoothDevices();
-            return true;
-        }
-
-        return false;
-    });
-
-    @Override
-    protected void onResume(){
-        super.onResume();
-        bluetoothHelper.showBluetoothDevices();
-    }
-
     @Override
     protected void onPause(){
         super.onPause();
-        //bluetoothHelper.getDialog().cancel();
+
+        if(bluetoothHelper.getPairedDeviceDialog() != null){
+            bluetoothHelper.getPairedDeviceDialog().cancel();
+        }
+
+        if(bluetoothHelper.getDiscoveredDeviceDialog() != null) {
+            bluetoothHelper.getDiscoveredDeviceDialog().cancel();
+        }
     }
 
     @Override
-    protected void onStop(){
-        super.onStop();
+    protected void onDestroy(){
+        super.onDestroy();
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_send:
+
+                if(matchNumber.getText().toString().isEmpty()){
+                    Toast.makeText(MatchScoutingActivity.this, "Match number can't be empty", Toast.LENGTH_LONG).show();
+                    break;
+                }
+
+                if(teamNumber.getText().toString().isEmpty()){
+                    Toast.makeText(MatchScoutingActivity.this, "Team number can't be empty", Toast.LENGTH_LONG).show();
+                    break;
+                }
+
                 AlertDialog.Builder sendDialog = new AlertDialog.Builder(MatchScoutingActivity.this);
                 sendDialog.setTitle("Confirm Send")
                         .setMessage("Are you sure this is correct? If not then we will hunt you down")
                         .setNegativeButton("Cancel", (dialog, which) -> dialog.cancel())
                         .setPositiveButton("Ok", (dialog, which) -> {
-                            try {
-                                String json = new Gson().toJson(new LancerMatchBuilder()
-                                        .setMatchNumber(Integer.parseInt(matchNumber.getText().toString()))
-                                        .setTeamNumber(Integer.parseInt(teamNumber.getText().toString()))
-                                        .setColor(getAllianceColor())
-                                        .setStartingConfiguration(getStartingConfiguration())
-                                        .setCrossedAutoLine(crossedAutoLineBox.isChecked())
-                                        .setAutonomousAttempt((AutonomousAttempt)autonomousAttempt.getSelectedItem())
-                                        .setWrongSideAuto(wrongSideAutoBox.isChecked())
-                                        .setAllianceSwitch(Integer.parseInt(allianceSwitchText.getText().toString()))
-                                        .setCenterScale(Integer.parseInt(centerScaleText.getText().toString()))
-                                        .setOpponentSwitch(Integer.parseInt(opponentSwitchText.getText().toString()))
-                                        .setExchange(Integer.parseInt(exchangeText.getText().toString()))
-                                        .setEndGameAttempt((EndGameAttempt)endGameAttempt.getSelectedItem())
-                                        .setBrokeDown(brokenRobotBox.isChecked())
-                                        .setComment(comments.getText().toString())
-                                        .createLancerMatch());
+                            String json = new Gson().toJson(new LancerMatchBuilder()
+                                    .setMatchNumber(Integer.parseInt(matchNumber.getText().toString()))
+                                    .setTeamNumber(Integer.parseInt(teamNumber.getText().toString()))
+                                    .setColor(getAllianceColor())
+                                    .setStartingConfiguration(getStartingConfiguration())
+                                    .setCrossedAutoLine(crossedAutoLineBox.isChecked())
+                                    .setAutonomousAttempt((AutonomousAttempt)autonomousAttempt.getSelectedItem())
+                                    .setWrongSideAuto(wrongSideAutoBox.isChecked())
+                                    .setAllianceSwitch(Integer.parseInt(allianceSwitchText.getText().toString()))
+                                    .setCenterScale(Integer.parseInt(centerScaleText.getText().toString()))
+                                    .setOpponentSwitch(Integer.parseInt(opponentSwitchText.getText().toString()))
+                                    .setExchange(Integer.parseInt(exchangeText.getText().toString()))
+                                    .setEndGameAttempt((EndGameAttempt)endGameAttempt.getSelectedItem())
+                                    .setBrokeDown(brokenRobotBox.isChecked())
+                                    .setComment(comments.getText().toString())
+                                    .createLancerMatch());
 
-                                bluetoothHelper.write("MATCH" + json);
-                                reset();
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            } catch (NumberFormatException e){
-                                Toast.makeText(MatchScoutingActivity.this, "Match or Team number can't be empty", Toast.LENGTH_LONG).show();
-                                e.printStackTrace();
-                            }
+                            //bluetoothHelper.write("MATCH" + json);
+
+                            bluetoothHelper.showPairedBluetoothDevices(true, "MATCH" + json);
+                            reset();
                         }).show();
                 break;
             case R.id.action_reset:
@@ -173,10 +155,7 @@ public class MatchScoutingActivity extends AppCompatActivity {
                 resetDialog.setTitle("Confirm Reset")
                         .setMessage("Are you sure you want to reset?")
                         .setNegativeButton("Cancel", (dialog, which) -> dialog.cancel())
-                        .setPositiveButton("Ok", (dialog, which) -> {
-                            reset();
-                            bluetoothHelper.showBluetoothDevices();
-                        }).show();
+                        .setPositiveButton("Ok", (dialog, which) -> reset()).show();
                 break;
             case R.id.action_settings:
                 startActivity(new Intent(this, SettingsActivity.class));
