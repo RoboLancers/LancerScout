@@ -1,8 +1,9 @@
 package robolancer.com.lancerscout.activities;
 
 import android.bluetooth.BluetoothAdapter;
+import android.content.Context;
 import android.content.Intent;
-import android.os.Handler;
+import android.content.SharedPreferences;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -22,14 +23,12 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 
-import java.io.IOException;
-import java.util.Objects;
-
 import robolancer.com.lancerscout.R;
 import robolancer.com.lancerscout.bluetooth.BluetoothHelper;
 import robolancer.com.lancerscout.models.AllianceColor;
 import robolancer.com.lancerscout.models.AutonomousAttempt;
 import robolancer.com.lancerscout.models.EndGameAttempt;
+import robolancer.com.lancerscout.models.LancerMatch;
 import robolancer.com.lancerscout.models.LancerMatchBuilder;
 import robolancer.com.lancerscout.models.StartingConfiguration;
 
@@ -97,14 +96,64 @@ public class MatchScoutingActivity extends AppCompatActivity{
             bluetoothHelper.getPairedDeviceDialog().cancel();
         }
 
-        if(bluetoothHelper.getDiscoveredDeviceDialog() != null) {
-            bluetoothHelper.getDiscoveredDeviceDialog().cancel();
+        int match = 0, team = 0;
+
+        if(!matchNumber.getText().toString().isEmpty()){
+            match = Integer.parseInt(matchNumber.getText().toString());
         }
+
+        if(!teamNumber.getText().toString().isEmpty()){
+            team = Integer.parseInt(teamNumber.getText().toString());
+        }
+
+        String json = new Gson().toJson(new LancerMatchBuilder()
+                .setMatchNumber(match)
+                .setTeamNumber(team)
+                .setColor(getAllianceColorFromRadioButtons())
+                .setStartingConfiguration(getStartingConfigurationFromRadioButtons())
+                .setCrossedAutoLine(crossedAutoLineBox.isChecked())
+                .setAutonomousAttempt((AutonomousAttempt)autonomousAttempt.getSelectedItem())
+                .setWrongSideAuto(wrongSideAutoBox.isChecked())
+                .setAllianceSwitch(Integer.parseInt(allianceSwitchText.getText().toString()))
+                .setCenterScale(Integer.parseInt(centerScaleText.getText().toString()))
+                .setOpponentSwitch(Integer.parseInt(opponentSwitchText.getText().toString()))
+                .setExchange(Integer.parseInt(exchangeText.getText().toString()))
+                .setEndGameAttempt((EndGameAttempt)endGameAttempt.getSelectedItem())
+                .setBrokeDown(brokenRobotBox.isChecked())
+                .setComment(comments.getText().toString())
+                .createLancerMatch());
+
+        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("matchDetail", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("match", json);
+        editor.apply();
     }
 
     @Override
-    protected void onDestroy(){
-        super.onDestroy();
+    protected void onResume(){
+        super.onResume();
+
+        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("matchDetail", Context.MODE_PRIVATE);
+        String json = sharedPreferences.getString("match", "");
+        Gson gson = new Gson();
+
+        if(!json.equals("")){
+            LancerMatch lancerMatch = gson.fromJson(json, LancerMatch.class);
+            matchNumber.setText(String.valueOf(lancerMatch.getMatchNumber()));
+            teamNumber.setText(String.valueOf(lancerMatch.getTeamNumber()));
+            setRadioAllianceColor(lancerMatch.getColor());
+            setRadioStartingConfiguration(lancerMatch.getStartingConfiguration());
+            crossedAutoLineBox.setChecked(lancerMatch.getCrossedAutoLine());
+            setSpinnerAutonomousAttempt(lancerMatch.getAutonomousAttempt());
+            wrongSideAutoBox.setChecked(lancerMatch.getWrongSideAuto());
+            allianceSwitchText.setText(String.valueOf(lancerMatch.getAllianceSwitch()));
+            centerScaleText.setText(String.valueOf(lancerMatch.getCenterScale()));
+            opponentSwitchText.setText(String.valueOf(lancerMatch.getOpponentSwitch()));
+            exchangeText.setText(String.valueOf(lancerMatch.getExchange()));
+            setSpinnerEndGameAttempt(lancerMatch.getEndGameAttempt());
+            brokenRobotBox.setChecked(lancerMatch.getRobotBrokeDown());
+            comments.setText(lancerMatch.getComment());
+        }
     }
 
     @Override
@@ -130,8 +179,8 @@ public class MatchScoutingActivity extends AppCompatActivity{
                             String json = new Gson().toJson(new LancerMatchBuilder()
                                     .setMatchNumber(Integer.parseInt(matchNumber.getText().toString()))
                                     .setTeamNumber(Integer.parseInt(teamNumber.getText().toString()))
-                                    .setColor(getAllianceColor())
-                                    .setStartingConfiguration(getStartingConfiguration())
+                                    .setColor(getAllianceColorFromRadioButtons())
+                                    .setStartingConfiguration(getStartingConfigurationFromRadioButtons())
                                     .setCrossedAutoLine(crossedAutoLineBox.isChecked())
                                     .setAutonomousAttempt((AutonomousAttempt)autonomousAttempt.getSelectedItem())
                                     .setWrongSideAuto(wrongSideAutoBox.isChecked())
@@ -270,7 +319,7 @@ public class MatchScoutingActivity extends AppCompatActivity{
         matchNumber.requestFocus();
     }
 
-    private AllianceColor getAllianceColor(){
+    private AllianceColor getAllianceColorFromRadioButtons(){
         switch(allianceColor.getCheckedRadioButtonId()){
             case R.id.blueAllianceRadioButton:
                 return AllianceColor.BLUE;
@@ -281,7 +330,7 @@ public class MatchScoutingActivity extends AppCompatActivity{
         }
     }
 
-    private StartingConfiguration getStartingConfiguration(){
+    private StartingConfiguration getStartingConfigurationFromRadioButtons(){
         switch (startingConfiguration.getCheckedRadioButtonId()){
             case R.id.leftStartingConfiguration:
                 return StartingConfiguration.LEFT;
@@ -292,5 +341,46 @@ public class MatchScoutingActivity extends AppCompatActivity{
             default:
                 return StartingConfiguration.LEFT;
         }
+    }
+
+    private void setRadioAllianceColor(AllianceColor color){
+        switch (color){
+            case BLUE:
+                allianceColor.check(R.id.blueAllianceRadioButton);
+                break;
+            case RED:
+                allianceColor.check(R.id.redAllianceRadioButton);
+                break;
+            default:
+                allianceColor.check(R.id.blueAllianceRadioButton);
+                break;
+        }
+    }
+
+    private void setRadioStartingConfiguration(StartingConfiguration configuration){
+        switch (configuration){
+            case LEFT:
+                startingConfiguration.check(R.id.leftStartingConfiguration);
+                break;
+            case MIDDLE:
+                startingConfiguration.check(R.id.middleStartingConfiguration);
+                break;
+            case RIGHT:
+                startingConfiguration.check(R.id.rightStartingConfiguration);
+                break;
+            default:
+                startingConfiguration.check(R.id.leftStartingConfiguration);
+                break;
+        }
+    }
+
+    private void setSpinnerAutonomousAttempt(AutonomousAttempt attempt){
+        ArrayAdapter adapter = (ArrayAdapter) autonomousAttempt.getAdapter();
+        autonomousAttempt.setSelection(adapter.getPosition(attempt));
+    }
+
+    private void setSpinnerEndGameAttempt(EndGameAttempt attempt){
+        ArrayAdapter adapter = (ArrayAdapter) endGameAttempt.getAdapter();
+        endGameAttempt.setSelection(adapter.getPosition(attempt));
     }
 }
