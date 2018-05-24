@@ -144,8 +144,6 @@ public class MatchScoutingActivity extends AppCompatActivity{
                                     .setComment(comments.getText().toString())
                                     .createLancerMatch());
 
-                            //bluetoothHelper.write("MATCH" + json);
-
                             bluetoothHelper.showPairedBluetoothDevices(true, "MATCH" + json);
                             reset();
                         }).show();

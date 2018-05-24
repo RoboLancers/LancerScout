@@ -4,6 +4,7 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -69,8 +70,14 @@ public class BluetoothHelper implements Runnable{
 
         pairedDeviceDialog = new AlertDialog.Builder(context).setAdapter(pairedDeviceAdapter, (dialog, which) -> {
             if(pairedDeviceAdapter.getItem(which).equals("Not on screen")){
+                Toast.makeText(context, "Please pair with computer", Toast.LENGTH_LONG).show();
                 dialog.dismiss();
-                showDiscoveredBluetooth(send, data);
+
+                final Intent intent = new Intent(Intent.ACTION_MAIN, null);
+                intent.addCategory(Intent.CATEGORY_LAUNCHER);
+                intent.setComponent(new ComponentName("com.android.settings", "com.android.settings.bluetooth.BluetoothSettings"));
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent);
             }else {
                 try {
                     dialog.dismiss();
