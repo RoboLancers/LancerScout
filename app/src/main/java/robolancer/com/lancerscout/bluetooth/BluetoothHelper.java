@@ -8,8 +8,6 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.os.Bundle;
-import android.os.Message;
 import android.os.ParcelUuid;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
@@ -23,8 +21,6 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Set;
 import java.util.UUID;
-
-import robolancer.com.lancerscout.activities.MatchScoutingActivity;
 
 public class BluetoothHelper implements Runnable{
 

@@ -1,456 +1,475 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#f1f5f8"
-    android:orientation="vertical"
-    tools:context=".activities.MatchScoutingActivity">
+    android:background="@android:color/holo_green_dark">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/appbar"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
-        android:elevation="4dp"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme" />
+        android:layout_height="match_parent"
+        android:background="#f1f5f8"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:orientation="vertical"
+        tools:context=".activities.MatchScoutingActivity">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <LinearLayout
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/appbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:background="?attr/colorPrimary"
+            android:elevation="4dp"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="?attr/actionBarTheme" />
 
-            <TextView
-                android:id="@+id/titleLabel"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:text="@string/match_scouting"
-                android:textAlignment="center"
-                android:textSize="30sp" />
-
-            <View
-                android:id="@+id/divider"
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:background="?android:attr/listDivider" />
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/matchNumberLabel"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/titleLabel"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/match_number"
-                    android:textAlignment="center" />
+                    android:layout_margin="10dp"
+                    android:text="@string/match_scouting"
+                    android:textAlignment="center"
+                    android:textSize="30sp" />
 
-                <EditText
-                    android:id="@+id/matchNumberInput"
-                    android:layout_width="wrap_content"
+                <View
+                    android:id="@+id/divider"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="?android:attr/listDivider" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:ems="10"
-                    android:hint="@string/current_match_number"
-                    android:inputType="number"
-                    android:textSize="14sp" />
-            </LinearLayout>
+                    android:layout_margin="10dp"
+                    android:orientation="horizontal">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/matchNumberLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/match_number"
+                        android:textAlignment="center" />
+
+                    <EditText
+                        android:id="@+id/matchNumberInput"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ems="10"
+                        android:hint="@string/current_match_number"
+                        android:inputType="number"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/teamNumberLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/team_number"
+                        android:textAlignment="center" />
+
+                    <EditText
+                        android:id="@+id/teamNumberInput"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ems="10"
+                        android:hint="@string/team_number"
+                        android:inputType="number"
+                        android:textSize="14sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:orientation="horizontal">
+
+                    <RadioGroup
+                        android:id="@+id/allianceColor"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:id="@+id/allianceRadioLabel"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/alliance_color"
+                            android:textAlignment="center" />
+
+                        <RadioButton
+                            android:id="@+id/blueAllianceRadioButton"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:checked="true"
+                            android:text="@string/blue_alliance"
+                            android:textAlignment="textStart" />
+
+                        <RadioButton
+                            android:id="@+id/redAllianceRadioButton"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/red_alliance" />
+                    </RadioGroup>
+
+                    <RadioGroup
+                        android:id="@+id/startingConfiguration"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:id="@+id/textView4"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/starting_configuration" />
+
+                        <RadioButton
+                            android:id="@+id/leftStartingConfiguration"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:checked="true"
+                            android:text="@string/left" />
+
+                        <RadioButton
+                            android:id="@+id/middleStartingConfiguration"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/middle" />
+
+                        <RadioButton
+                            android:id="@+id/rightStartingConfiguration"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/right" />
+                    </RadioGroup>
+
+                </LinearLayout>
 
                 <TextView
-                    android:id="@+id/teamNumberLabel"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/autonomousSectionLabel"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/team_number"
-                    android:textAlignment="center" />
+                    android:layout_margin="10dp"
+                    android:text="@string/autonomous"
+                    android:textAlignment="center"
+                    android:textSize="24sp" />
+
+                <View
+                    android:id="@+id/divider2"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="?android:attr/listDivider" />
+
+                <CheckBox
+                    android:id="@+id/crossedAutoLineCheckBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:text="@string/crossed_auto_line"
+                    android:textAlignment="textStart" />
+
+                <Spinner
+                    android:id="@+id/autoCubePlacementSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:entries="@array/AutoCubeAttempts" />
+
+                <CheckBox
+                    android:id="@+id/wrongSideAutoCheckBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:text="@string/cube_on_wrong_side_of_switch_scale" />
+
+                <TextView
+                    android:id="@+id/teleopSectionLabel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:text="@string/teleop"
+                    android:textAlignment="center"
+                    android:textSize="24sp" />
+
+                <View
+                    android:id="@+id/divider3"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="?android:attr/listDivider" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="10dp"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/allianceSwitchSubtract"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:elevation="4dp"
+                        android:text="@string/minus" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="2"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/allianceSwitchLabel"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/alliance_switch"
+                            android:textAlignment="center" />
+
+                        <TextView
+                            android:id="@+id/allianceSwitchCounter"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/zero"
+                            android:textAlignment="center" />
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/allianceSwitchAdd"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:elevation="4dp"
+                        android:text="@string/plus" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="10dp"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/centerScaleSubtract"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:elevation="4dp"
+                        android:text="@string/minus" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="2"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/centerScaleLabel"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Center Scale"
+                            android:textAlignment="center" />
+
+                        <TextView
+                            android:id="@+id/centerScaleCounter"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/zero"
+                            android:textAlignment="center" />
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/centerScaleAdd"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:elevation="4dp"
+                        android:text="@string/plus" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="10dp"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/opponentSwitchSubtract"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:elevation="4dp"
+                        android:text="@string/minus" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="2"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/opponentSwitchLabel"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Opponent Switch"
+                            android:textAlignment="center" />
+
+                        <TextView
+                            android:id="@+id/opponentSwitchCounter"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/zero"
+                            android:textAlignment="center" />
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/opponentSwitchAdd"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:elevation="4dp"
+                        android:text="@string/plus" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="10dp"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/exchangeSubtract"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:elevation="4dp"
+                        android:text="@string/minus" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="2"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/exchangeLabel"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Exchange"
+                            android:textAlignment="center" />
+
+                        <TextView
+                            android:id="@+id/exchangeCounter"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/zero"
+                            android:textAlignment="center" />
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/exchangeAdd"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:elevation="4dp"
+                        android:text="@string/plus" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/endGameSectionLabel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:text="End Game"
+                    android:textAlignment="center"
+                    android:textSize="24sp" />
+
+                <View
+                    android:id="@+id/divider4"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="?android:attr/listDivider" />
+
+                <Spinner
+                    android:id="@+id/endGameClimbSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:entries="@array/EndGameAttempts" />
+
+                <CheckBox
+                    android:id="@+id/breakdownCheckBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:checked="false"
+                    android:text="Robot broke down" />
+
+                <TextView
+                    android:id="@+id/commentLabel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:text="Comments"
+                    android:textAlignment="center"
+                    android:textSize="24sp" />
 
                 <EditText
-                    android:id="@+id/teamNumberInput"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/commentInput"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_margin="10dp"
                     android:ems="10"
-                    android:hint="@string/team_number"
-                    android:inputType="number"
-                    android:textSize="14sp" />
+                    android:hint="Any other comments?"
+                    android:inputType="text|textAutoCorrect|textMultiLine|textPersonName"
+                    android:textAlignment="textStart" />
 
             </LinearLayout>
+        </ScrollView>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:orientation="horizontal">
+    </LinearLayout>
 
-                <RadioGroup
-                    android:id="@+id/allianceColor"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1">
+    <android.support.design.widget.NavigationView
+        android:id="@+id/nv"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        app:headerLayout="@layout/nav_header"
+        app:menu="@menu/navigation_menu"></android.support.design.widget.NavigationView>
 
-                    <TextView
-                        android:id="@+id/allianceRadioLabel"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/alliance_color"
-                        android:textAlignment="center" />
-
-                    <RadioButton
-                        android:id="@+id/blueAllianceRadioButton"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:checked="true"
-                        android:text="@string/blue_alliance"
-                        android:textAlignment="textStart" />
-
-                    <RadioButton
-                        android:id="@+id/redAllianceRadioButton"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/red_alliance" />
-                </RadioGroup>
-
-                <RadioGroup
-                    android:id="@+id/startingConfiguration"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1">
-
-                    <TextView
-                        android:id="@+id/textView4"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/starting_configuration" />
-
-                    <RadioButton
-                        android:id="@+id/leftStartingConfiguration"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:checked="true"
-                        android:text="@string/left" />
-
-                    <RadioButton
-                        android:id="@+id/middleStartingConfiguration"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/middle" />
-
-                    <RadioButton
-                        android:id="@+id/rightStartingConfiguration"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/right" />
-                </RadioGroup>
-
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/autonomousSectionLabel"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:text="@string/autonomous"
-                android:textAlignment="center"
-                android:textSize="24sp" />
-
-            <View
-                android:id="@+id/divider2"
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:background="?android:attr/listDivider" />
-
-            <CheckBox
-                android:id="@+id/crossedAutoLineCheckBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:text="@string/crossed_auto_line"
-                android:textAlignment="textStart" />
-
-            <Spinner
-                android:id="@+id/autoCubePlacementSpinner"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:entries="@array/AutoCubeAttempts" />
-
-            <CheckBox
-                android:id="@+id/wrongSideAutoCheckBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:text="@string/cube_on_wrong_side_of_switch_scale" />
-
-            <TextView
-                android:id="@+id/teleopSectionLabel"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:text="@string/teleop"
-                android:textAlignment="center"
-                android:textSize="24sp" />
-
-            <View
-                android:id="@+id/divider3"
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:background="?android:attr/listDivider" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="10dp"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/allianceSwitchSubtract"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:elevation="4dp"
-                    android:text="@string/minus" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="2"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/allianceSwitchLabel"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/alliance_switch"
-                        android:textAlignment="center" />
-
-                    <TextView
-                        android:id="@+id/allianceSwitchCounter"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/zero"
-                        android:textAlignment="center" />
-                </LinearLayout>
-
-                <Button
-                    android:id="@+id/allianceSwitchAdd"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:elevation="4dp"
-                    android:text="@string/plus" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="10dp"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/centerScaleSubtract"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:elevation="4dp"
-                    android:text="@string/minus" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="2"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/centerScaleLabel"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Center Scale"
-                        android:textAlignment="center" />
-
-                    <TextView
-                        android:id="@+id/centerScaleCounter"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/zero"
-                        android:textAlignment="center" />
-                </LinearLayout>
-
-                <Button
-                    android:id="@+id/centerScaleAdd"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:elevation="4dp"
-                    android:text="@string/plus" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="10dp"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/opponentSwitchSubtract"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:elevation="4dp"
-                    android:text="@string/minus" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="2"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/opponentSwitchLabel"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Opponent Switch"
-                        android:textAlignment="center" />
-
-                    <TextView
-                        android:id="@+id/opponentSwitchCounter"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/zero"
-                        android:textAlignment="center" />
-                </LinearLayout>
-
-                <Button
-                    android:id="@+id/opponentSwitchAdd"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:elevation="4dp"
-                    android:text="@string/plus" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="10dp"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/exchangeSubtract"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:elevation="4dp"
-                    android:text="@string/minus" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="2"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/exchangeLabel"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Exchange"
-                        android:textAlignment="center" />
-
-                    <TextView
-                        android:id="@+id/exchangeCounter"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/zero"
-                        android:textAlignment="center" />
-                </LinearLayout>
-
-                <Button
-                    android:id="@+id/exchangeAdd"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:elevation="4dp"
-                    android:text="@string/plus" />
-
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/endGameSectionLabel"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:text="End Game"
-                android:textAlignment="center"
-                android:textSize="24sp" />
-
-            <View
-                android:id="@+id/divider4"
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:background="?android:attr/listDivider" />
-
-            <Spinner
-                android:id="@+id/endGameClimbSpinner"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:entries="@array/EndGameAttempts" />
-
-            <CheckBox
-                android:id="@+id/breakdownCheckBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:checked="false"
-                android:text="Robot broke down" />
-
-            <TextView
-                android:id="@+id/commentLabel"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:text="Comments"
-                android:textAlignment="center"
-                android:textSize="24sp" />
-
-            <EditText
-                android:id="@+id/commentInput"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:ems="10"
-                android:hint="Any other comments?"
-                android:inputType="text|textAutoCorrect|textMultiLine|textPersonName"
-                android:textAlignment="textStart" />
-
-        </LinearLayout>
-    </ScrollView>
-
-</LinearLayout>
+</android.support.v4.widget.DrawerLayout>
 
