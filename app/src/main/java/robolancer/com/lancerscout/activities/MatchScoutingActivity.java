@@ -4,19 +4,15 @@ import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.NavigationView;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -28,6 +24,8 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 
+import java.util.Objects;
+
 import robolancer.com.lancerscout.R;
 import robolancer.com.lancerscout.bluetooth.BluetoothHelper;
 import robolancer.com.lancerscout.models.AllianceColor;
@@ -38,10 +36,6 @@ import robolancer.com.lancerscout.models.LancerMatchBuilder;
 import robolancer.com.lancerscout.models.StartingConfiguration;
 
 public class MatchScoutingActivity extends AppCompatActivity{
-
-    BluetoothAdapter bluetoothAdapter;
-    static BluetoothHelper bluetoothHelper;
-
     EditText matchNumber, teamNumber;
     RadioGroup allianceColor, startingConfiguration;
 
@@ -58,23 +52,20 @@ public class MatchScoutingActivity extends AppCompatActivity{
 
     Toolbar appbar;
 
+    static BluetoothHelper bluetoothHelper;
+    BluetoothAdapter bluetoothAdapter;
     Thread bluetoothThread;
-    private DrawerLayout drawerLayout;
-    private ActionBarDrawerToggle toggle;
-    private NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_match_scouting);
 
-        Toast.makeText(this, "Please pair with computer before using app", Toast.LENGTH_LONG).show();
-
         findViews();
 
+        appbar.setTitleTextColor(Color.WHITE);
         setSupportActionBar(appbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         setupListeners();
 
@@ -109,37 +100,7 @@ public class MatchScoutingActivity extends AppCompatActivity{
             bluetoothHelper.getPairedDeviceDialog().cancel();
         }
 
-        int match = 0, team = 0;
-
-        if(!matchNumber.getText().toString().isEmpty()){
-            match = Integer.parseInt(matchNumber.getText().toString());
-        }
-
-        if(!teamNumber.getText().toString().isEmpty()){
-            team = Integer.parseInt(teamNumber.getText().toString());
-        }
-
-        String json = new Gson().toJson(new LancerMatchBuilder()
-                .setMatchNumber(match)
-                .setTeamNumber(team)
-                .setColor(getAllianceColorFromRadioButtons())
-                .setStartingConfiguration(getStartingConfigurationFromRadioButtons())
-                .setCrossedAutoLine(crossedAutoLineBox.isChecked())
-                .setAutonomousAttempt((AutonomousAttempt)autonomousAttempt.getSelectedItem())
-                .setWrongSideAuto(wrongSideAutoBox.isChecked())
-                .setAllianceSwitch(Integer.parseInt(allianceSwitchText.getText().toString()))
-                .setCenterScale(Integer.parseInt(centerScaleText.getText().toString()))
-                .setOpponentSwitch(Integer.parseInt(opponentSwitchText.getText().toString()))
-                .setExchange(Integer.parseInt(exchangeText.getText().toString()))
-                .setEndGameAttempt((EndGameAttempt)endGameAttempt.getSelectedItem())
-                .setBrokeDown(brokenRobotBox.isChecked())
-                .setComment(comments.getText().toString())
-                .createLancerMatch());
-
-        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("matchDetail", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("match", json);
-        editor.apply();
+        save();
     }
 
     @Override
@@ -182,15 +143,6 @@ public class MatchScoutingActivity extends AppCompatActivity{
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (toggle.onOptionsItemSelected(item)) {
-            View view = this.getCurrentFocus();
-            if (view != null) {
-                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-            }
-            return true;
-        }
-
         switch (item.getItemId()) {
             case R.id.action_send:
 
@@ -226,9 +178,7 @@ public class MatchScoutingActivity extends AppCompatActivity{
                                     .setComment(comments.getText().toString())
                                     .createLancerMatch());
 
-                            bluetoothHelper.showPairedBluetoothDevices(true, "MATCH" + json);
-
-                            reset();
+                            bluetoothHelper.showPairedBluetoothDevices(true, "MATCH" + json, this);
                         }).show();
                 break;
             case R.id.action_reset:
@@ -237,9 +187,6 @@ public class MatchScoutingActivity extends AppCompatActivity{
                         .setMessage("Are you sure you want to reset?")
                         .setNegativeButton("Cancel", (dialog, which) -> dialog.cancel())
                         .setPositiveButton("Ok", (dialog, which) -> reset()).show();
-                break;
-            case R.id.action_settings:
-                startActivity(new Intent(this, SettingsActivity.class));
                 break;
             default:
                 return super.onOptionsItemSelected(item);
@@ -258,10 +205,6 @@ public class MatchScoutingActivity extends AppCompatActivity{
     public void onBackPressed(){}
 
     private void findViews(){
-        drawerLayout = findViewById(R.id.activity_main);
-        toggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.Open, R.string.Close);
-        navigationView = findViewById(R.id.nv);
-
         appbar = findViewById(R.id.appbar);
 
         matchNumber = findViewById(R.id.matchNumberInput);
@@ -299,25 +242,6 @@ public class MatchScoutingActivity extends AppCompatActivity{
     }
 
     private void setupListeners(){
-        drawerLayout.addDrawerListener(toggle);
-        toggle.setDrawerIndicatorEnabled(true);
-        toggle.syncState();
-
-        navigationView.setNavigationItemSelectedListener(item -> {
-            switch (item.getItemId()) {
-                case R.id.matchScouting:
-                    Toast.makeText(MatchScoutingActivity.this, "MatchScouting", Toast.LENGTH_LONG).show();
-                    break;
-                case R.id.pitScouting:
-                    Toast.makeText(MatchScoutingActivity.this, "PitScouting", Toast.LENGTH_LONG).show();
-                    break;
-                default:
-                    return false;
-            }
-
-            return true;
-        });
-
         allianceSwitchAdd.setOnClickListener(v -> allianceSwitchText.setText(String.valueOf(Integer.parseInt(allianceSwitchText.getText().toString()) + 1)));
         centerScaleAdd.setOnClickListener(v -> centerScaleText.setText(String.valueOf(Integer.parseInt(centerScaleText.getText().toString()) + 1)));
         opponentSwitchAdd.setOnClickListener(v -> opponentSwitchText.setText(String.valueOf(Integer.parseInt(opponentSwitchText.getText().toString()) + 1)));
@@ -352,7 +276,7 @@ public class MatchScoutingActivity extends AppCompatActivity{
         });
     }
 
-    private void reset(){
+    public void reset() {
         matchNumber.getText().clear();
         teamNumber.getText().clear();
 
@@ -372,6 +296,40 @@ public class MatchScoutingActivity extends AppCompatActivity{
         brokenRobotBox.setChecked(false);
 
         comments.getText().clear();
+    }
+
+    public void save() {
+        int match = 0, team = 0;
+
+        if (!matchNumber.getText().toString().isEmpty()) {
+            match = Integer.parseInt(matchNumber.getText().toString());
+        }
+
+        if (!teamNumber.getText().toString().isEmpty()) {
+            team = Integer.parseInt(teamNumber.getText().toString());
+        }
+
+        String json = new Gson().toJson(new LancerMatchBuilder()
+                .setMatchNumber(match)
+                .setTeamNumber(team)
+                .setColor(getAllianceColorFromRadioButtons())
+                .setStartingConfiguration(getStartingConfigurationFromRadioButtons())
+                .setCrossedAutoLine(crossedAutoLineBox.isChecked())
+                .setAutonomousAttempt((AutonomousAttempt) autonomousAttempt.getSelectedItem())
+                .setWrongSideAuto(wrongSideAutoBox.isChecked())
+                .setAllianceSwitch(Integer.parseInt(allianceSwitchText.getText().toString()))
+                .setCenterScale(Integer.parseInt(centerScaleText.getText().toString()))
+                .setOpponentSwitch(Integer.parseInt(opponentSwitchText.getText().toString()))
+                .setExchange(Integer.parseInt(exchangeText.getText().toString()))
+                .setEndGameAttempt((EndGameAttempt) endGameAttempt.getSelectedItem())
+                .setBrokeDown(brokenRobotBox.isChecked())
+                .setComment(comments.getText().toString())
+                .createLancerMatch());
+
+        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("matchDetail", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("match", json);
+        editor.apply();
     }
 
     private AllianceColor getAllianceColorFromRadioButtons(){

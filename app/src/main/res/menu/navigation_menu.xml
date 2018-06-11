@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item
-        android:id="@+id/matchScouting"
-        android:title="Match Scouting" />
-    <item
-        android:id="@+id/pitScouting"
-        android:title="Pit Scouting" />
-</menu>

@@ -22,6 +22,8 @@ import java.util.ArrayList;
 import java.util.Set;
 import java.util.UUID;
 
+import robolancer.com.lancerscout.activities.MatchScoutingActivity;
+
 public class BluetoothHelper implements Runnable{
 
     private OutputStream outputStream;
@@ -42,7 +44,7 @@ public class BluetoothHelper implements Runnable{
         this.bluetoothAdapter = bluetoothAdapter;
     }
 
-    public void showPairedBluetoothDevices(boolean send, String data){
+    public void showPairedBluetoothDevices(boolean send, String data, MatchScoutingActivity matchScoutingActivity) {
         ArrayList<BluetoothDevice> pairedDeviceList = new ArrayList<>();
         ArrayList<String> pairedDeviceName = new ArrayList<>();
 
@@ -69,6 +71,8 @@ public class BluetoothHelper implements Runnable{
                 Toast.makeText(context, "Please pair with computer", Toast.LENGTH_LONG).show();
                 dialog.dismiss();
 
+                matchScoutingActivity.save();
+
                 final Intent intent = new Intent(Intent.ACTION_MAIN, null);
                 intent.addCategory(Intent.CATEGORY_LAUNCHER);
                 intent.setComponent(new ComponentName("com.android.settings", "com.android.settings.bluetooth.BluetoothSettings"));
@@ -91,11 +95,11 @@ public class BluetoothHelper implements Runnable{
                         write(data);
                     }
                     Toast.makeText(context, "Sent", Toast.LENGTH_LONG).show();
-
+                    matchScoutingActivity.reset();
                     socket.close();
                 } catch (IOException e) {
                     Toast.makeText(context, "Can not connect to Lancer Scout Server! Please check if server is open or try again.", Toast.LENGTH_LONG).show();
-                    showPairedBluetoothDevices(send, data);
+                    showPairedBluetoothDevices(send, data, matchScoutingActivity);
                 }
             }
         }).show();

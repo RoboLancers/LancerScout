@@ -25,6 +25,13 @@
     <string name="Open">Open</string>
     <string name="Close">Close</string>
     <string name="robolancers_logo">Robolancers Logo</string>
+    <string name="any_other_comments">Any other comments?</string>
+    <string name="comments">Comments</string>
+    <string name="robot_broke_down">Robot broke down</string>
+    <string name="end_game">End Game</string>
+    <string name="center_scale">Center Scale</string>
+    <string name="opponent_switch">Opponent Switch</string>
+    <string name="exchange">Exchange</string>
 
     <string-array name="AutoCubeAttempts">
         <item>No Cube Attempt</item>
