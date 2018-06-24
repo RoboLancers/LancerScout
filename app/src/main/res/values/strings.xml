@@ -33,6 +33,22 @@
     <string name="opponent_switch">Opponent Switch</string>
     <string name="exchange">Exchange</string>
 
+    <string-array name="ProgrammingLanguage">
+        <item>Java</item>
+        <item>C++</item>
+        <item>Labview</item>
+        <item>Other</item>
+    </string-array>
+
+    <string-array name="Drivetrains">
+        <item>4WD</item>
+        <item>6WD</item>
+        <item>8WD</item>
+        <item>Swerve</item>
+        <item>Kiwi</item>
+        <item>Custom</item>
+    </string-array>
+
     <string-array name="AutoCubeAttempts">
         <item>No Cube Attempt</item>
         <item>Attempted Switch</item>
@@ -51,14 +67,5 @@
         <item>Successful climb on another robot</item>
         <item>Successful climb with another robot attached</item>
         <item>Successful climb on own</item>
-    </string-array>
-
-    <string-array name="ScoutingPhoneNumbers">
-        <item>Scouting Phone 1</item>
-        <item>Scouting Phone 2</item>
-        <item>Scouting Phone 3</item>
-        <item>Scouting Phone 4</item>
-        <item>Scouting Phone 5</item>
-        <item>Scouting Phone 6</item>
     </string-array>
 </resources>

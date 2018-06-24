@@ -1,4 +1,4 @@
-package robolancer.com.lancerscout.models;
+package robolancer.com.lancerscout.models.match;
 
 public enum EndGameAttempt {
     NOT_PARKED_ON_PLATFORM ("Not parked on platform"),

@@ -1,4 +1,4 @@
-package robolancer.com.lancerscout.models;
+package robolancer.com.lancerscout.models.match;
 
 public enum AutonomousAttempt {
     NO_CUBE_ATTEMPT ("No cube attempt"),

@@ -7,12 +7,10 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -28,14 +26,21 @@ import java.util.Objects;
 
 import robolancer.com.lancerscout.R;
 import robolancer.com.lancerscout.bluetooth.BluetoothHelper;
-import robolancer.com.lancerscout.models.AllianceColor;
-import robolancer.com.lancerscout.models.AutonomousAttempt;
-import robolancer.com.lancerscout.models.EndGameAttempt;
-import robolancer.com.lancerscout.models.LancerMatch;
-import robolancer.com.lancerscout.models.LancerMatchBuilder;
-import robolancer.com.lancerscout.models.StartingConfiguration;
+import robolancer.com.lancerscout.models.match.AllianceColor;
+import robolancer.com.lancerscout.models.match.AutonomousAttempt;
+import robolancer.com.lancerscout.models.match.EndGameAttempt;
+import robolancer.com.lancerscout.models.match.LancerMatch;
+import robolancer.com.lancerscout.models.match.LancerMatchBuilder;
+import robolancer.com.lancerscout.models.match.StartingConfiguration;
 
-public class MatchScoutingActivity extends AppCompatActivity{
+public class MatchScoutingActivity extends LancerActivity {
+
+    Toolbar appbar;
+
+    BluetoothHelper bluetoothHelper;
+    BluetoothAdapter bluetoothAdapter;
+    Thread bluetoothThread;
+
     EditText matchNumber, teamNumber;
     RadioGroup allianceColor, startingConfiguration;
 
@@ -50,13 +55,6 @@ public class MatchScoutingActivity extends AppCompatActivity{
 
     EditText comments;
 
-    Toolbar appbar;
-
-    static BluetoothHelper bluetoothHelper;
-    BluetoothAdapter bluetoothAdapter;
-    Thread bluetoothThread;
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_match_scouting);
@@ -71,7 +69,7 @@ public class MatchScoutingActivity extends AppCompatActivity{
 
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
-        if(bluetoothAdapter == null){
+        if (bluetoothAdapter == null) {
             new AlertDialog.Builder(this)
                     .setTitle("Not compatible")
                     .setMessage("Your phone does not support Bluetooth")
@@ -80,7 +78,7 @@ public class MatchScoutingActivity extends AppCompatActivity{
                     .show();
         }
 
-        if(!bluetoothAdapter.isEnabled()) {
+        if (!bluetoothAdapter.isEnabled()) {
             startActivityForResult(new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE), 0);
         }
 
@@ -88,8 +86,6 @@ public class MatchScoutingActivity extends AppCompatActivity{
 
         bluetoothThread = new Thread(bluetoothHelper);
         bluetoothThread.start();
-
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     }
 
     @Override
@@ -284,7 +280,7 @@ public class MatchScoutingActivity extends AppCompatActivity{
         startingConfiguration.check(R.id.leftStartingConfiguration);
 
         crossedAutoLineBox.setChecked(false);
-        autonomousAttempt.setSelection(0, true);
+        autonomousAttempt.setSelection(0);
         wrongSideAutoBox.setChecked(false);
 
         allianceSwitchText.setText("0");
@@ -292,7 +288,7 @@ public class MatchScoutingActivity extends AppCompatActivity{
         opponentSwitchText.setText("0");
         exchangeText.setText("0");
 
-        endGameAttempt.setSelection(0, true);
+        endGameAttempt.setSelection(0);
         brokenRobotBox.setChecked(false);
 
         comments.getText().clear();

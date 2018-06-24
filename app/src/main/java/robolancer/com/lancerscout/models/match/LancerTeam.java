@@ -1,4 +1,4 @@
-package robolancer.com.lancerscout.models;
+package robolancer.com.lancerscout.models.match;
 
 public class LancerTeam {
 
