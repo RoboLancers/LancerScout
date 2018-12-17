@@ -4,11 +4,9 @@ public class LancerTeam {
 
     public String teamName;
     public int teamNumber;
-    public Integer teamImage;
 
-    public LancerTeam(String teamName, int teamNumber, Integer teamImage){
+    public LancerTeam(String teamName, int teamNumber) {
         this.teamName = teamName;
         this.teamNumber = teamNumber;
-        this.teamImage = teamImage;
     }
 }

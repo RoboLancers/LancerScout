@@ -7,36 +7,34 @@ import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.Toast;
 
 import java.util.Set;
 
 import robolancer.com.lancerscout.R;
 
-public class MainActivity extends AppCompatActivity {
-
+public class MainActivity extends LancerActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button matchScoutingButton = findViewById(R.id.matchScoutingButton);
-        Button pitScoutingButton = findViewById(R.id.pitScoutingButton);
+        findViewById(R.id.matchScoutingButton).setOnClickListener(view -> startActivity(new Intent(MainActivity.this, MatchScoutingActivity.class)));
+        findViewById(R.id.pitScoutingButton).setOnClickListener(view -> startActivity(new Intent(MainActivity.this, PitScoutingActivity.class)));
 
-        matchScoutingButton.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, MatchScoutingActivity.class)));
+        setupBluetooth();
 
-        pitScoutingButton.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, PitScoutingActivity.class)));
+        Toast.makeText(this, "Please pair with computer before using app", Toast.LENGTH_LONG).show();
+    }
 
+    public void setupBluetooth() {
         BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
         if (bluetoothAdapter != null) {
             if (bluetoothAdapter.isEnabled()) {
                 Set<BluetoothDevice> bondedDevices = bluetoothAdapter.getBondedDevices();
 
-                if (bondedDevices.size() <= 0) {
+                if (bondedDevices.size() == 0) {
                     DialogInterface.OnClickListener onClickListener = (dialogInterface, i) -> {
                         switch (i) {
                             case DialogInterface.BUTTON_POSITIVE:
@@ -66,9 +64,23 @@ public class MainActivity extends AppCompatActivity {
                     startActivityForResult(new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE), 0);
                 }
             }
+        } else {
+            new AlertDialog.Builder(this)
+                    .setTitle("Not compatible")
+                    .setMessage("Your phone does not support Bluetooth")
+                    .setPositiveButton("Exit", (dialog, which) -> System.exit(0))
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
         }
+    }
 
-        Toast.makeText(this, "Please pair with computer before using app", Toast.LENGTH_LONG).show();
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+    @Override
+    public void save() {
+
+    }
+
+    @Override
+    public void reset() {
+
     }
 }

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/pit_save"
+        android:icon="@drawable/outline_save_white_24dp"
+        android:title="@string/save"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/pit_send"
+        android:icon="@drawable/send_white_24dp"
+        android:title="@string/send"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/pit_reset"
+        android:icon="@drawable/loop_white_24dp"
+        android:title="@string/reset"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/pit_history"
+        android:icon="@drawable/history_white_24dp"
+        android:title="@string/pit_history"
+        app:showAsAction="never" />
+</menu>

@@ -32,6 +32,9 @@
     <string name="center_scale">Center Scale</string>
     <string name="opponent_switch">Opponent Switch</string>
     <string name="exchange">Exchange</string>
+    <string name="match_history">Match history</string>
+    <string name="pit_history">Pit History</string>
+    <string name="save">Save</string>
 
     <string-array name="ProgrammingLanguage">
         <item>Java</item>

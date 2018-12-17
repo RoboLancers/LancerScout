@@ -1,8 +1,9 @@
 package robolancer.com.lancerscout.models.match;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class LancerMatch {
+public class LancerMatch implements Serializable {
 
     private int matchNumber;
     private int teamNumber;
@@ -98,7 +99,7 @@ public class LancerMatch {
 
     @Override
     public String toString(){
-        return "Match " + getMatchNumber();
+        return "Match " + getMatchNumber() + " - Team " + getTeamNumber();
     }
 
     @Override

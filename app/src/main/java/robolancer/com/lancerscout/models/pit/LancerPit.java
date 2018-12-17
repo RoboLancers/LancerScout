@@ -1,6 +1,8 @@
 package robolancer.com.lancerscout.models.pit;
 
-public class LancerPit {
+import java.io.Serializable;
+
+public class LancerPit implements Serializable {
 
     private int teamNumber;
     private Drivetrain drivetrain;
@@ -46,5 +48,10 @@ public class LancerPit {
 
     public String getComments() {
         return comments;
+    }
+
+    @Override
+    public String toString() {
+        return "Team " + getTeamNumber();
     }
 }

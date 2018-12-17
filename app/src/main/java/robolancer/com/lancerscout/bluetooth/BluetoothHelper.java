@@ -36,6 +36,7 @@ public class BluetoothHelper implements Runnable{
     private AlertDialog pairedDeviceDialog;
 
     private BluetoothSocket socket;
+    private BluetoothDevice device;
 
     public BluetoothHelper(Context context, BluetoothAdapter bluetoothAdapter){
         this.context = context;
@@ -79,7 +80,7 @@ public class BluetoothHelper implements Runnable{
             }else {
                 try {
                     dialog.dismiss();
-                    BluetoothDevice device = pairedDeviceList.get(which);
+                    device = pairedDeviceList.get(which);
                     ParcelUuid uuid = new ParcelUuid(UUID.fromString("fba199f7-47a7-4ed4-b880-3073424d2e2c" + ""));
                     socket = device.createRfcommSocketToServiceRecord(uuid.getUuid());
                     bluetoothAdapter.cancelDiscovery();
