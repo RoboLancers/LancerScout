@@ -1,17 +1,14 @@
 package robolancer.com.lancerscout.activities;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 import robolancer.com.lancerscout.R;
 import robolancer.com.lancerscout.models.pit.LancerPit;
@@ -21,7 +18,6 @@ public class PitHistoryActivity extends LancerActivity {
     public static LancerPit clickedPit;
     public static ArrayList<LancerPit> pitHistory = new ArrayList<>();
 
-    Toolbar appbar;
     ListView pitHistoryListView;
     ArrayAdapter<LancerPit> adapter;
 
@@ -33,16 +29,13 @@ public class PitHistoryActivity extends LancerActivity {
         findViews();
         setupListeners();
 
-        appbar.setTitleTextColor(Color.WHITE);
-        setSupportActionBar(appbar);
-        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
-
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, pitHistory);
         pitHistoryListView.setAdapter(adapter);
     }
 
     private void findViews() {
-        appbar = findViewById(R.id.appbar);
+        setupAppbar();
+
         pitHistoryListView = findViewById(R.id.pitHistoryListView);
     }
 

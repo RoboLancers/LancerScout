@@ -2,6 +2,7 @@ package robolancer.com.lancerscout.models.pit;
 
 import java.io.Serializable;
 
+@SuppressWarnings("WeakerAccess")
 public class LancerPit implements Serializable {
 
     private int teamNumber;

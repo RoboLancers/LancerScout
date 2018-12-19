@@ -1,5 +1,6 @@
 package robolancer.com.lancerscout.models.pit;
 
+@SuppressWarnings("unused")
 public enum ProgrammingLanguage {
     JAVA("Java"),
     C_PLUS_PLUS("C++"),

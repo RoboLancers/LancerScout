@@ -24,7 +24,7 @@ public class MainActivity extends LancerActivity {
 
         setupBluetooth();
 
-        Toast.makeText(this, "Please pair with computer before using app", Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), "Please pair with computer before using app", Toast.LENGTH_LONG).show();
     }
 
     public void setupBluetooth() {

@@ -1,5 +1,6 @@
 package robolancer.com.lancerscout.models.match;
 
+@SuppressWarnings("ALL")
 public class LancerTeam {
 
     public String teamName;

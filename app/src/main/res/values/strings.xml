@@ -12,7 +12,6 @@
     <string name="team_number">Team Number</string>
     <string name="current_match_number">Current Match Number</string>
     <string name="match_number">Match Number</string>
-    <string name="match_scouting">Match Scouting</string>
     <string name="cube_on_wrong_side_of_switch_scale">Cube on wrong side of switch/scale</string>
     <string name="teleop">TeleOp</string>
     <string name="send">Send</string>
@@ -35,6 +34,27 @@
     <string name="match_history">Match history</string>
     <string name="pit_history">Pit History</string>
     <string name="save">Save</string>
+    <string name="welcome_to_lancer_scout">Welcome to Lancer Scout!</string>
+    <string name="match_scouting">Match Scouting</string>
+    <string name="pit_scouting">Pit Scouting</string>
+    <string name="drivetrain">Drivetrain</string>
+    <string name="mechanisms">Mechanisms</string>
+    <string name="cube_intake">Cube Intake</string>
+    <string name="floor_intake">Floor Intake</string>
+    <string name="portal_exchange_intake">Portal/Exchange Intake</string>
+    <string name="both_intakes">Both Intakes</string>
+    <string name="climb">Climb</string>
+    <string name="solo_climber">Solo Climber</string>
+    <string name="climber_with_ramp_for_one_robot">Climber with ramp for one robot</string>
+    <string name="climber_with_ramp_for_two_robots">Climber with ramp for two robots</string>
+    <string name="ramp_for_one_robot">Ramp for one robot</string>
+    <string name="ramp_for_two_robots">Ramp for two robots</string>
+    <string name="none">None</string>
+    <string name="other">Other</string>
+    <string name="robot_weight">Robot Weight</string>
+    <string name="programming_language">Programming Language</string>
+    <string name="comment">Comment</string>
+    <string name="_0_0">0.0</string>
 
     <string-array name="ProgrammingLanguage">
         <item>Java</item>

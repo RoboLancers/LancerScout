@@ -7,13 +7,13 @@
     android:focusable="true"
     android:focusableInTouchMode="true"
     android:orientation="vertical"
-    tools:context=".activities.MatchScoutingActivity">
+    tools:context=".activities.MatchScoutingActivity"
+    tools:targetApi="o">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/appbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimaryDark"
         android:elevation="4dp" />
 
     <ScrollView
@@ -34,11 +34,7 @@
                 android:textAlignment="center"
                 android:textSize="30sp" />
 
-            <View
-                android:id="@+id/divider"
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:background="?android:attr/listDivider" />
+            <View style="@style/Divider" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -62,6 +58,7 @@
                     android:ems="10"
                     android:hint="@string/current_match_number"
                     android:inputType="number"
+                    android:autofillHints=""
                     android:textSize="14sp" />
             </LinearLayout>
 
@@ -87,6 +84,7 @@
                     android:ems="10"
                     android:hint="@string/team_number"
                     android:inputType="number"
+                    android:importantForAutofill="no"
                     android:textSize="14sp" />
 
             </LinearLayout>
@@ -166,6 +164,8 @@
 
             </LinearLayout>
 
+            <View style="@style/Divider" />
+
             <TextView
                 android:id="@+id/autonomousSectionLabel"
                 android:layout_width="match_parent"
@@ -174,12 +174,6 @@
                 android:text="@string/autonomous"
                 android:textAlignment="center"
                 android:textSize="24sp" />
-
-            <View
-                android:id="@+id/divider2"
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:background="?android:attr/listDivider" />
 
             <CheckBox
                 android:id="@+id/crossedAutoLineCheckBox"
@@ -203,6 +197,8 @@
                 android:layout_margin="10dp"
                 android:text="@string/cube_on_wrong_side_of_switch_scale" />
 
+            <View style="@style/Divider" />
+
             <TextView
                 android:id="@+id/teleopSectionLabel"
                 android:layout_width="match_parent"
@@ -211,12 +207,6 @@
                 android:text="@string/teleop"
                 android:textAlignment="center"
                 android:textSize="24sp" />
-
-            <View
-                android:id="@+id/divider3"
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:background="?android:attr/listDivider" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -230,7 +220,9 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:elevation="4dp"
-                    android:text="@string/minus" />
+                    android:text="@string/minus"
+                    android:textColor="@android:color/black"
+                    tools:targetApi="lollipop" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -259,7 +251,9 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:elevation="4dp"
-                    android:text="@string/plus" />
+                    android:text="@string/plus"
+                    android:textColor="@android:color/black"
+                    tools:targetApi="lollipop" />
 
             </LinearLayout>
 
@@ -275,7 +269,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:elevation="4dp"
-                    android:text="@string/minus" />
+                    android:text="@string/minus"
+                    android:textColor="@android:color/black" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -304,7 +299,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:elevation="4dp"
-                    android:text="@string/plus" />
+                    android:text="@string/plus"
+                    android:textColor="@android:color/black" />
 
             </LinearLayout>
 
@@ -320,7 +316,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:elevation="4dp"
-                    android:text="@string/minus" />
+                    android:text="@string/minus"
+                    android:textColor="@android:color/black" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -349,7 +346,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:elevation="4dp"
-                    android:text="@string/plus" />
+                    android:text="@string/plus"
+                    android:textColor="@android:color/black" />
 
             </LinearLayout>
 
@@ -365,7 +363,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:elevation="4dp"
-                    android:text="@string/minus" />
+                    android:text="@string/minus"
+                    android:textColor="@android:color/black" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -394,9 +393,12 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:elevation="4dp"
-                    android:text="@string/plus" />
+                    android:text="@string/plus"
+                    android:textColor="@android:color/black" />
 
             </LinearLayout>
+
+            <View style="@style/Divider" />
 
             <TextView
                 android:id="@+id/endGameSectionLabel"
@@ -406,12 +408,6 @@
                 android:text="@string/end_game"
                 android:textAlignment="center"
                 android:textSize="24sp" />
-
-            <View
-                android:id="@+id/divider4"
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:background="?android:attr/listDivider" />
 
             <Spinner
                 android:id="@+id/endGameClimbSpinner"
@@ -445,8 +441,8 @@
                 android:ems="10"
                 android:hint="@string/any_other_comments"
                 android:inputType="text|textAutoCorrect|textMultiLine|textPersonName"
+                android:autofillHints=""
                 android:textAlignment="textStart" />
-
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

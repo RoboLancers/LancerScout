@@ -3,10 +3,8 @@ package robolancer.com.lancerscout.activities;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
@@ -21,7 +19,6 @@ import android.widget.Toast;
 import com.google.gson.reflect.TypeToken;
 
 import java.util.List;
-import java.util.Objects;
 
 import robolancer.com.lancerscout.R;
 import robolancer.com.lancerscout.bluetooth.BluetoothHelper;
@@ -33,10 +30,8 @@ import robolancer.com.lancerscout.models.match.LancerMatchBuilder;
 import robolancer.com.lancerscout.models.match.StartingConfiguration;
 import robolancer.com.lancerscout.utilities.LancerScoutUtility;
 
+@SuppressWarnings("unchecked")
 public class MatchScoutingActivity extends LancerActivity {
-
-    Toolbar appbar;
-
     BluetoothHelper bluetoothHelper;
     BluetoothAdapter bluetoothAdapter;
     Thread bluetoothThread;
@@ -61,10 +56,6 @@ public class MatchScoutingActivity extends LancerActivity {
 
         findViews();
         setupListeners();
-
-        appbar.setTitleTextColor(Color.WHITE);
-        setSupportActionBar(appbar);
-        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
@@ -195,7 +186,7 @@ public class MatchScoutingActivity extends LancerActivity {
     }
 
     private void findViews() {
-        appbar = findViewById(R.id.appbar);
+        setupAppbar();
 
         matchNumber = findViewById(R.id.matchNumberInput);
         teamNumber = findViewById(R.id.teamNumberInput);

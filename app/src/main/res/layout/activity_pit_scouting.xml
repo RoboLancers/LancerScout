@@ -7,13 +7,14 @@
     android:focusable="true"
     android:focusableInTouchMode="true"
     android:orientation="vertical"
-    tools:context=".activities.MatchScoutingActivity">
+    tools:context=".activities.MatchScoutingActivity"
+    tools:ignore="NestedWeights"
+    tools:targetApi="o">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/appbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimaryDark"
         android:elevation="4dp" />
 
     <ScrollView
@@ -28,7 +29,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Pit Scouting"
+                android:text="@string/pit_scouting"
                 android:textAlignment="center"
                 android:textSize="30sp" />
 
@@ -54,6 +55,7 @@
                     android:ems="10"
                     android:hint="@string/team_number"
                     android:inputType="number"
+                    android:autofillHints=""
                     android:textSize="14sp" />
 
             </LinearLayout>
@@ -62,7 +64,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:text="Drivetrain"
+                android:text="@string/drivetrain"
                 android:textAlignment="center"
                 android:textSize="30sp" />
 
@@ -77,7 +79,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:text="Mechanisms"
+                android:text="@string/mechanisms"
                 android:textAlignment="center"
                 android:textSize="30sp" />
 
@@ -85,6 +87,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="10dp"
+                android:baselineAligned="false"
                 android:orientation="horizontal">
 
                 <LinearLayout
@@ -97,7 +100,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="0"
-                        android:text="Cube Intake"
+                        android:text="@string/cube_intake"
                         android:textAlignment="center"
                         android:textSize="25sp" />
 
@@ -112,21 +115,21 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Floor Intake" />
+                            android:text="@string/floor_intake" />
 
                         <RadioButton
                             android:id="@+id/humanIntakeRadioButton"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Portal/Exchange Intake" />
+                            android:text="@string/portal_exchange_intake" />
 
                         <RadioButton
                             android:id="@+id/bothIntakeRadioButton"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Both Intakes" />
+                            android:text="@string/both_intakes" />
 
                         <RadioButton
                             android:id="@+id/noneIntakeRadioButton"
@@ -134,7 +137,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:checked="true"
-                            android:text="None" />
+                            android:text="@string/none" />
                     </RadioGroup>
                 </LinearLayout>
 
@@ -148,7 +151,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="0"
-                        android:text="Climb"
+                        android:text="@string/climb"
                         android:textAlignment="center"
                         android:textSize="25sp" />
 
@@ -163,35 +166,35 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Solo Climber" />
+                            android:text="@string/solo_climber" />
 
                         <RadioButton
                             android:id="@+id/climberRamp1RadioButton"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Climber with ramp for one robot" />
+                            android:text="@string/climber_with_ramp_for_one_robot" />
 
                         <RadioButton
                             android:id="@+id/climberRamp2RadioButton"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Climber with ramp for two robots" />
+                            android:text="@string/climber_with_ramp_for_two_robots" />
 
                         <RadioButton
                             android:id="@+id/ramp1RadioButton"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Ramp for one robot" />
+                            android:text="@string/ramp_for_one_robot" />
 
                         <RadioButton
                             android:id="@+id/ramp2RadioButton"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Ramp for two robots" />
+                            android:text="@string/ramp_for_two_robots" />
 
                         <RadioButton
                             android:id="@+id/noneClimberRadioButton"
@@ -199,7 +202,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:checked="true"
-                            android:text="None" />
+                            android:text="@string/none" />
                     </RadioGroup>
                 </LinearLayout>
 
@@ -207,17 +210,17 @@
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:layout_margin="10dp"
                 android:layout_weight="0"
-                android:text="Other"
+                android:text="@string/other"
                 android:textAlignment="center"
                 android:textSize="30sp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Robot Weight"
+                android:text="@string/robot_weight"
                 android:textAlignment="center"
                 android:textSize="20sp" />
 
@@ -228,12 +231,14 @@
                 android:layout_margin="10dp"
                 android:ems="10"
                 android:inputType="number"
+                android:autofillHints=""
+                android:hint="@string/_0_0"
                 android:textAlignment="center" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Programming Language"
+                android:text="@string/programming_language"
                 android:textAlignment="center"
                 android:textSize="20sp" />
 
@@ -249,7 +254,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:text="Comment"
+                android:text="@string/comment"
                 android:textAlignment="center"
                 android:textSize="20sp" />
 
@@ -261,8 +266,8 @@
                 android:ems="10"
                 android:hint="@string/any_other_comments"
                 android:inputType="text|textAutoCorrect|textMultiLine|textPersonName"
+                android:autofillHints=""
                 android:textAlignment="textStart" />
         </LinearLayout>
     </ScrollView>
-
 </LinearLayout>

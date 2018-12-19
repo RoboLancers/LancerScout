@@ -33,6 +33,7 @@ import android.view.ViewGroup;
  * This technique can be used with an {@link android.app.Activity} class, not just
  * {@link android.preference.PreferenceActivity}.
  */
+@SuppressWarnings("ALL")
 public abstract class AppCompatPreferenceActivity extends PreferenceActivity {
     private AppCompatDelegate mDelegate;
     @Override
