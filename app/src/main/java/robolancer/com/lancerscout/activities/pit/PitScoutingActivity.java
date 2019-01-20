@@ -258,8 +258,9 @@ public class PitScoutingActivity extends LancerActivity {
     public void reset() {
         teamNumberEditText.setText("");
         drivetrainSpinner.setSelection(0);
-        hatchIntakeGroup.check(R.id.noneIntakeRadioButton);
-        climbGroup.check(R.id.noneClimberRadioButton);
+        cargoIntakeGroup.check(R.id.cargoNoneIntakeRadioButton);
+        hatchIntakeGroup.check(R.id.hatchNoneIntakeRadioButton);
+        climbGroup.check(R.id.level1Climb);
         robotWeightEditText.setText("");
         programmingLanguageSpinner.setSelection(0);
         comments.setText("");
@@ -297,13 +298,13 @@ public class PitScoutingActivity extends LancerActivity {
 
     private Intake getCargoIntakeFromRadio() {
         switch (cargoIntakeGroup.getCheckedRadioButtonId()) {
-            case R.id.floorIntakeRadioButton:
+            case R.id.cargoFloorIntakeRadioButton:
                 return Intake.FLOOR_INTAKE;
-            case R.id.humanIntakeRadioButton:
+            case R.id.cargoHumanIntakeRadioButton:
                 return Intake.HUMAN_INTAKE;
-            case R.id.bothIntakeRadioButton:
+            case R.id.cargoBothIntakeRadioButton:
                 return Intake.BOTH_INTAKES;
-            case R.id.noneIntakeRadioButton:
+            case R.id.cargoNoneIntakeRadioButton:
                 return Intake.NO_INTAKE;
             default:
                 return Intake.FLOOR_INTAKE;
@@ -312,13 +313,13 @@ public class PitScoutingActivity extends LancerActivity {
 
     private Intake getHatchIntakeFromRadio() {
         switch (hatchIntakeGroup.getCheckedRadioButtonId()) {
-            case R.id.floorIntakeRadioButton:
+            case R.id.hatchFloorIntakeRadioButton:
                 return Intake.FLOOR_INTAKE;
-            case R.id.humanIntakeRadioButton:
+            case R.id.hatchHumanIntakeRadioButton:
                 return Intake.HUMAN_INTAKE;
-            case R.id.bothIntakeRadioButton:
+            case R.id.hatchBothIntakeRadioButton:
                 return Intake.BOTH_INTAKES;
-            case R.id.noneIntakeRadioButton:
+            case R.id.hatchNoneIntakeRadioButton:
                 return Intake.NO_INTAKE;
             default:
                 return Intake.FLOOR_INTAKE;

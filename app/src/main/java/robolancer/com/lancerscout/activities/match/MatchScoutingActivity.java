@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
@@ -266,7 +267,7 @@ public class MatchScoutingActivity extends LancerActivity {
         teamNumber.getText().clear();
 
         allianceColor.check(R.id.blueAllianceRadioButton);
-        startingConfiguration.check(R.id.leftStartingConfiguration);
+        startingConfiguration.check(R.id.level1StartingConfiguration);
 
         crossedAutoLineBox.setChecked(false);
         sandstorm.check(R.id.autonomousSandstorm);

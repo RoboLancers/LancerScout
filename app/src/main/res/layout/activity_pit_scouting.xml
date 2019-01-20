@@ -52,10 +52,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:autofillHints=""
                     android:ems="10"
                     android:hint="@string/team_number"
                     android:inputType="number"
-                    android:autofillHints=""
+                    android:textColor="@android:color/white"
                     android:textSize="14sp" />
 
             </LinearLayout>
@@ -262,11 +263,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:ems="10"
-                android:inputType="number"
                 android:autofillHints=""
+                android:ems="10"
                 android:hint="@string/_0_0"
-                android:textAlignment="center" />
+                android:inputType="number"
+                android:textAlignment="center"
+                android:textColor="@android:color/white" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -296,11 +298,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
+                android:autofillHints=""
                 android:ems="10"
                 android:hint="@string/any_other_comments"
                 android:inputType="text|textAutoCorrect|textMultiLine|textPersonName"
-                android:autofillHints=""
-                android:textAlignment="textStart" />
+                android:textAlignment="textStart"
+                android:textColor="@android:color/white" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>
