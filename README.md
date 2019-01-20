@@ -1,4 +1,4 @@
-# Lancer Scout Server
+# Lancer Scout Application
 
 Android application designed to be used in conjunction with Lancer Scout Server gui application for scouting FRC events
 
