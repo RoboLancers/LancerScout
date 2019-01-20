@@ -1,4 +1,4 @@
-package robolancer.com.lancerscout.activities;
+package robolancer.com.lancerscout.activities.match;
 
 import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
@@ -21,9 +21,10 @@ import com.google.gson.reflect.TypeToken;
 import java.util.List;
 
 import robolancer.com.lancerscout.R;
+import robolancer.com.lancerscout.activities.LancerActivity;
 import robolancer.com.lancerscout.bluetooth.BluetoothHelper;
 import robolancer.com.lancerscout.models.match.AllianceColor;
-import robolancer.com.lancerscout.models.match.AutonomousAttempt;
+import robolancer.com.lancerscout.models.match.Sandstorm;
 import robolancer.com.lancerscout.models.match.EndGameAttempt;
 import robolancer.com.lancerscout.models.match.LancerMatch;
 import robolancer.com.lancerscout.models.match.LancerMatchBuilder;
@@ -39,11 +40,14 @@ public class MatchScoutingActivity extends LancerActivity {
     EditText matchNumber, teamNumber;
     RadioGroup allianceColor, startingConfiguration;
 
-    CheckBox crossedAutoLineBox, wrongSideAutoBox;
-    Spinner autonomousAttempt;
+    CheckBox crossedAutoLineBox;
+    RadioGroup sandstorm;
 
-    TextView allianceSwitchText, centerScaleText, opponentSwitchText, exchangeText;
-    Button allianceSwitchAdd, allianceSwitchSubtract, centerScaleAdd, centerScaleSubtract, opponentSwitchAdd, opponentSwitchSubtract, exchangeAdd, exchangeSubtract;
+    TextView rocketCargoText, rocketHatchText, shipCargoText, shipHatchText;
+    Button rocketCargoAdd, rocketCargoSubtract,
+            rocketHatchAdd, rocketHatchSubtract,
+            shipCargoAdd, shipCargoSubtract,
+            shipHatchAdd, shipHatchSubtract;
 
     Spinner endGameAttempt;
     CheckBox brokenRobotBox;
@@ -100,12 +104,13 @@ public class MatchScoutingActivity extends LancerActivity {
             setRadioAllianceColor(lancerMatch.getColor());
             setRadioStartingConfiguration(lancerMatch.getStartingConfiguration());
             crossedAutoLineBox.setChecked(lancerMatch.getCrossedAutoLine());
-            setSpinnerAutonomousAttempt(lancerMatch.getAutonomousAttempt());
-            wrongSideAutoBox.setChecked(lancerMatch.getWrongSideAuto());
-            allianceSwitchText.setText(String.valueOf(lancerMatch.getAllianceSwitch()));
-            centerScaleText.setText(String.valueOf(lancerMatch.getCenterScale()));
-            opponentSwitchText.setText(String.valueOf(lancerMatch.getOpponentSwitch()));
-            exchangeText.setText(String.valueOf(lancerMatch.getExchange()));
+            setRadioSandstorm(lancerMatch.getSandstorm());
+
+            rocketCargoText.setText(String.valueOf(lancerMatch.getRocketCargo()));
+            rocketHatchText.setText(String.valueOf(lancerMatch.getRocketHatch()));
+            shipCargoText.setText(String.valueOf(lancerMatch.getShipCargo()));
+            shipHatchText.setText(String.valueOf(lancerMatch.getShipHatch()));
+
             setSpinnerEndGameAttempt(lancerMatch.getEndGameAttempt());
             brokenRobotBox.setChecked(lancerMatch.getRobotBrokeDown());
             comments.setText(lancerMatch.getComment());
@@ -125,12 +130,13 @@ public class MatchScoutingActivity extends LancerActivity {
             setRadioAllianceColor(lancerMatch.getColor());
             setRadioStartingConfiguration(lancerMatch.getStartingConfiguration());
             crossedAutoLineBox.setChecked(lancerMatch.getCrossedAutoLine());
-            setSpinnerAutonomousAttempt(lancerMatch.getAutonomousAttempt());
-            wrongSideAutoBox.setChecked(lancerMatch.getWrongSideAuto());
-            allianceSwitchText.setText(String.valueOf(lancerMatch.getAllianceSwitch()));
-            centerScaleText.setText(String.valueOf(lancerMatch.getCenterScale()));
-            opponentSwitchText.setText(String.valueOf(lancerMatch.getOpponentSwitch()));
-            exchangeText.setText(String.valueOf(lancerMatch.getExchange()));
+            setRadioSandstorm(lancerMatch.getSandstorm());
+
+            rocketCargoText.setText(String.valueOf(lancerMatch.getRocketCargo()));
+            rocketHatchText.setText(String.valueOf(lancerMatch.getRocketHatch()));
+            shipCargoText.setText(String.valueOf(lancerMatch.getShipCargo()));
+            shipHatchText.setText(String.valueOf(lancerMatch.getShipHatch()));
+
             setSpinnerEndGameAttempt(lancerMatch.getEndGameAttempt());
             brokenRobotBox.setChecked(lancerMatch.getRobotBrokeDown());
             comments.setText(lancerMatch.getComment());
@@ -194,65 +200,63 @@ public class MatchScoutingActivity extends LancerActivity {
         startingConfiguration = findViewById(R.id.startingConfiguration);
 
         crossedAutoLineBox = findViewById(R.id.crossedAutoLineCheckBox);
-        wrongSideAutoBox = findViewById(R.id.wrongSideAutoCheckBox);
-        autonomousAttempt = findViewById(R.id.autoCubePlacementSpinner);
 
-        allianceSwitchAdd = findViewById(R.id.allianceSwitchAdd);
-        allianceSwitchText = findViewById(R.id.allianceSwitchCounter);
-        allianceSwitchSubtract = findViewById(R.id.allianceSwitchSubtract);
+        sandstorm = findViewById(R.id.sandstormRadioGroup);
 
-        centerScaleAdd = findViewById(R.id.centerScaleAdd);
-        centerScaleText = findViewById(R.id.centerScaleCounter);
-        centerScaleSubtract = findViewById(R.id.centerScaleSubtract);
+        rocketCargoAdd = findViewById(R.id.rocketCargoAdd);
+        rocketCargoText = findViewById(R.id.rocketCargoCounter);
+        rocketCargoSubtract = findViewById(R.id.rocketCargoSubtract);
 
-        opponentSwitchAdd = findViewById(R.id.opponentSwitchAdd);
-        opponentSwitchText = findViewById(R.id.opponentSwitchCounter);
-        opponentSwitchSubtract = findViewById(R.id.opponentSwitchSubtract);
+        rocketHatchAdd = findViewById(R.id.rocketHatchAdd);
+        rocketHatchText = findViewById(R.id.rocketHatchCounter);
+        rocketHatchSubtract = findViewById(R.id.rocketHatchSubtract);
 
-        exchangeAdd = findViewById(R.id.exchangeAdd);
-        exchangeText = findViewById(R.id.exchangeCounter);
-        exchangeSubtract = findViewById(R.id.exchangeSubtract);
+        shipCargoAdd = findViewById(R.id.shipCargoAdd);
+        shipCargoText = findViewById(R.id.shipCargoCounter);
+        shipCargoSubtract = findViewById(R.id.shipCargoSubtract);
+
+        shipHatchAdd = findViewById(R.id.shipHatchAdd);
+        shipHatchText = findViewById(R.id.shipHatchCounter);
+        shipHatchSubtract = findViewById(R.id.shipHatchSubtract);
 
         endGameAttempt = findViewById(R.id.endGameClimbSpinner);
         brokenRobotBox = findViewById(R.id.breakdownCheckBox);
 
-        comments = findViewById(R.id.commentInput);
-
-        autonomousAttempt.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, AutonomousAttempt.values()));
         endGameAttempt.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, EndGameAttempt.values()));
+        comments = findViewById(R.id.commentInput);
     }
 
     private void setupListeners() {
-        allianceSwitchAdd.setOnClickListener(v -> allianceSwitchText.setText(String.valueOf(Integer.parseInt(allianceSwitchText.getText().toString()) + 1)));
-        centerScaleAdd.setOnClickListener(v -> centerScaleText.setText(String.valueOf(Integer.parseInt(centerScaleText.getText().toString()) + 1)));
-        opponentSwitchAdd.setOnClickListener(v -> opponentSwitchText.setText(String.valueOf(Integer.parseInt(opponentSwitchText.getText().toString()) + 1)));
-        exchangeAdd.setOnClickListener(v -> exchangeText.setText(String.valueOf(Integer.parseInt(exchangeText.getText().toString()) + 1)));
+        rocketCargoAdd.setOnClickListener(v -> rocketCargoText.setText(String.valueOf(Integer.parseInt(rocketCargoText.getText().toString()) + 1)));
+        rocketHatchAdd.setOnClickListener(v -> rocketHatchText.setText(String.valueOf(Integer.parseInt(rocketHatchText.getText().toString()) + 1)));
+        shipCargoAdd.setOnClickListener(v -> shipCargoText.setText(String.valueOf(Integer.parseInt(shipCargoText.getText().toString()) + 1)));
+        shipHatchAdd.setOnClickListener(v -> shipHatchText.setText(String.valueOf(Integer.parseInt(shipHatchText.getText().toString()) + 1)));
 
-        allianceSwitchSubtract.setOnClickListener(v -> {
-            int allianceSwitch = Integer.parseInt(allianceSwitchText.getText().toString());
+        rocketCargoSubtract.setOnClickListener(v -> {
+            int allianceSwitch = Integer.parseInt(rocketCargoText.getText().toString());
             if (allianceSwitch > 0) {
-                allianceSwitchText.setText(String.valueOf(--allianceSwitch));
+                rocketCargoText.setText(String.valueOf(--allianceSwitch));
             }
         });
 
-        centerScaleSubtract.setOnClickListener(v -> {
-            int centerScale = Integer.parseInt(centerScaleText.getText().toString());
-            if (centerScale > 0) {
-                centerScaleText.setText(String.valueOf(--centerScale));
+        rocketHatchSubtract.setOnClickListener(v -> {
+            int rocketHatch = Integer.parseInt(rocketHatchText.getText().toString());
+            if (rocketHatch > 0) {
+                rocketHatchText.setText(String.valueOf(--rocketHatch));
             }
         });
 
-        opponentSwitchSubtract.setOnClickListener(v -> {
-            int opponentSwitch = Integer.parseInt(opponentSwitchText.getText().toString());
-            if (opponentSwitch > 0) {
-                opponentSwitchText.setText(String.valueOf(--opponentSwitch));
+        shipCargoSubtract.setOnClickListener(v -> {
+            int shipCargo = Integer.parseInt(shipCargoText.getText().toString());
+            if (shipCargo > 0) {
+                shipCargoText.setText(String.valueOf(--shipCargo));
             }
         });
 
-        exchangeSubtract.setOnClickListener(v -> {
-            int exchange = Integer.parseInt(exchangeText.getText().toString());
-            if (exchange > 0) {
-                exchangeText.setText(String.valueOf(--exchange));
+        shipHatchSubtract.setOnClickListener(v -> {
+            int shipHatch = Integer.parseInt(shipHatchText.getText().toString());
+            if (shipHatch > 0) {
+                shipHatchText.setText(String.valueOf(--shipHatch));
             }
         });
     }
@@ -265,13 +269,12 @@ public class MatchScoutingActivity extends LancerActivity {
         startingConfiguration.check(R.id.leftStartingConfiguration);
 
         crossedAutoLineBox.setChecked(false);
-        autonomousAttempt.setSelection(0);
-        wrongSideAutoBox.setChecked(false);
+        sandstorm.check(R.id.autonomousSandstorm);
 
-        allianceSwitchText.setText("0");
-        centerScaleText.setText("0");
-        opponentSwitchText.setText("0");
-        exchangeText.setText("0");
+        rocketCargoText.setText("0");
+        rocketHatchText.setText("0");
+        shipCargoText.setText("0");
+        shipHatchText.setText("0");
 
         endGameAttempt.setSelection(0);
         brokenRobotBox.setChecked(false);
@@ -297,12 +300,11 @@ public class MatchScoutingActivity extends LancerActivity {
                 .setColor(getAllianceColorFromRadioButtons())
                 .setStartingConfiguration(getStartingConfigurationFromRadioButtons())
                 .setCrossedAutoLine(crossedAutoLineBox.isChecked())
-                .setAutonomousAttempt((AutonomousAttempt) autonomousAttempt.getSelectedItem())
-                .setWrongSideAuto(wrongSideAutoBox.isChecked())
-                .setAllianceSwitch(Integer.parseInt(allianceSwitchText.getText().toString()))
-                .setCenterScale(Integer.parseInt(centerScaleText.getText().toString()))
-                .setOpponentSwitch(Integer.parseInt(opponentSwitchText.getText().toString()))
-                .setExchange(Integer.parseInt(exchangeText.getText().toString()))
+                .setSandstorm(getSandstormFromRadioButtons())
+                .setRocketCargo(Integer.parseInt(rocketCargoText.getText().toString()))
+                .setRocketHatch(Integer.parseInt(rocketHatchText.getText().toString()))
+                .setShipCargo(Integer.parseInt(shipCargoText.getText().toString()))
+                .setShipHatch(Integer.parseInt(shipHatchText.getText().toString()))
                 .setEndGameAttempt((EndGameAttempt) endGameAttempt.getSelectedItem())
                 .setBrokeDown(brokenRobotBox.isChecked())
                 .setComment(comments.getText().toString())
@@ -323,12 +325,11 @@ public class MatchScoutingActivity extends LancerActivity {
                 .setColor(getAllianceColorFromRadioButtons())
                 .setStartingConfiguration(getStartingConfigurationFromRadioButtons())
                 .setCrossedAutoLine(crossedAutoLineBox.isChecked())
-                .setAutonomousAttempt((AutonomousAttempt) autonomousAttempt.getSelectedItem())
-                .setWrongSideAuto(wrongSideAutoBox.isChecked())
-                .setAllianceSwitch(Integer.parseInt(allianceSwitchText.getText().toString()))
-                .setCenterScale(Integer.parseInt(centerScaleText.getText().toString()))
-                .setOpponentSwitch(Integer.parseInt(opponentSwitchText.getText().toString()))
-                .setExchange(Integer.parseInt(exchangeText.getText().toString()))
+                .setSandstorm(getSandstormFromRadioButtons())
+                .setRocketCargo(Integer.parseInt(rocketCargoText.getText().toString()))
+                .setRocketHatch(Integer.parseInt(rocketHatchText.getText().toString()))
+                .setShipCargo(Integer.parseInt(shipCargoText.getText().toString()))
+                .setShipHatch(Integer.parseInt(shipHatchText.getText().toString()))
                 .setEndGameAttempt((EndGameAttempt) endGameAttempt.getSelectedItem())
                 .setBrokeDown(brokenRobotBox.isChecked())
                 .setComment(comments.getText().toString())
@@ -348,14 +349,23 @@ public class MatchScoutingActivity extends LancerActivity {
 
     private StartingConfiguration getStartingConfigurationFromRadioButtons() {
         switch (startingConfiguration.getCheckedRadioButtonId()) {
-            case R.id.leftStartingConfiguration:
-                return StartingConfiguration.LEFT;
-            case R.id.middleStartingConfiguration:
-                return StartingConfiguration.MIDDLE;
-            case R.id.rightStartingConfiguration:
-                return StartingConfiguration.RIGHT;
+            case R.id.level1StartingConfiguration:
+                return StartingConfiguration.LEVEL_1;
+            case R.id.level2StartingConfiguration:
+                return StartingConfiguration.LEVEL_2;
             default:
-                return StartingConfiguration.LEFT;
+                return StartingConfiguration.LEVEL_1;
+        }
+    }
+
+    private Sandstorm getSandstormFromRadioButtons(){
+        switch (sandstorm.getCheckedRadioButtonId()){
+            case R.id.autonomousSandstorm:
+                return Sandstorm.AUTONOMOUS;
+            case R.id.driverControlledSandstorm:
+                return Sandstorm.DRIVER_CONTROLLED;
+            default:
+                return Sandstorm.DRIVER_CONTROLLED;
         }
     }
 
@@ -375,24 +385,27 @@ public class MatchScoutingActivity extends LancerActivity {
 
     private void setRadioStartingConfiguration(StartingConfiguration configuration) {
         switch (configuration) {
-            case LEFT:
-                startingConfiguration.check(R.id.leftStartingConfiguration);
+            case LEVEL_1:
+                startingConfiguration.check(R.id.level1StartingConfiguration);
                 break;
-            case MIDDLE:
-                startingConfiguration.check(R.id.middleStartingConfiguration);
-                break;
-            case RIGHT:
-                startingConfiguration.check(R.id.rightStartingConfiguration);
+            case LEVEL_2:
+                startingConfiguration.check(R.id.level2StartingConfiguration);
                 break;
             default:
-                startingConfiguration.check(R.id.leftStartingConfiguration);
+                startingConfiguration.check(R.id.level1StartingConfiguration);
                 break;
         }
     }
 
-    private void setSpinnerAutonomousAttempt(AutonomousAttempt attempt) {
-        ArrayAdapter<AutonomousAttempt> adapter = (ArrayAdapter) autonomousAttempt.getAdapter();
-        autonomousAttempt.setSelection(adapter.getPosition(attempt));
+    private void setRadioSandstorm(Sandstorm storm){
+        switch (storm) {
+            case AUTONOMOUS:
+                sandstorm.check(R.id.autonomousSandstorm);
+            case DRIVER_CONTROLLED:
+                sandstorm.check(R.id.driverControlledSandstorm);
+            default:
+                sandstorm.check(R.id.driverControlledSandstorm);
+        }
     }
 
     private void setSpinnerEndGameAttempt(EndGameAttempt attempt) {

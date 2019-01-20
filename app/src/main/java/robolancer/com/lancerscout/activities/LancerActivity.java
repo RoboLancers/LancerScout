@@ -14,9 +14,8 @@ import robolancer.com.lancerscout.R;
 
 
 public abstract class LancerActivity extends AppCompatActivity {
-
-    Gson gson = new Gson();
-    Toolbar appbar;
+    protected Gson gson = new Gson();
+    protected Toolbar appbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

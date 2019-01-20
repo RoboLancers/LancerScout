@@ -1,14 +1,12 @@
 package robolancer.com.lancerscout.models.match;
 
-public enum EndGameAttempt {
-    DID_NOT_CLIMB("Did not climb"),
-    LEVEL_1("Climbed to level 1"),
-    LEVEL_2("Climbed to level 2"),
-    LEVEL_3("Climbed to level 3");
+public enum Sandstorm {
+    AUTONOMOUS("Autonomous"),
+    DRIVER_CONTROLLED("Driver Controlled");
 
     private final String name;
 
-    EndGameAttempt(String name){
+    Sandstorm(String name){
         this.name = name;
     }
 

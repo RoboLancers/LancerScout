@@ -1,4 +1,4 @@
-package robolancer.com.lancerscout.activities;
+package robolancer.com.lancerscout.activities.match;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +11,7 @@ import android.widget.ListView;
 import java.util.ArrayList;
 
 import robolancer.com.lancerscout.R;
+import robolancer.com.lancerscout.activities.LancerActivity;
 import robolancer.com.lancerscout.models.match.LancerMatch;
 import robolancer.com.lancerscout.utilities.LancerScoutUtility;
 

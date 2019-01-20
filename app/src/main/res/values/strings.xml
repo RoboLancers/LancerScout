@@ -55,6 +55,14 @@
     <string name="programming_language">Programming Language</string>
     <string name="comment">Comment</string>
     <string name="_0_0">0.0</string>
+    <string name="level_2">Level 2</string>
+    <string name="level_1">Level 1</string>
+    <string name="ship_hatch">Ship Hatch</string>
+    <string name="rocket_cargo">Rocket Cargo</string>
+    <string name="rocket_hatch">Rocket Hatch</string>
+    <string name="ship_cargo">Ship Cargo</string>
+    <string name="sandstorm">Sandstorm</string>
+    <string name="driver_controlled">Driver Controlled</string>
 
     <string-array name="ProgrammingLanguage">
         <item>Java</item>
@@ -72,23 +80,10 @@
         <item>Custom</item>
     </string-array>
 
-    <string-array name="AutoCubeAttempts">
-        <item>No Cube Attempt</item>
-        <item>Attempted Switch</item>
-        <item>Attempted Scale</item>
-        <item>Successful Switch</item>
-        <item>Successful Scale</item>
-    </string-array>
-
     <string-array name="EndGameAttempts">
-        <item>Not parked on platform</item>
-        <item>Parked on platform</item>
-        <item>Attempted to hook onto bar</item>
-        <item>Attempted to attach to a robot</item>
-        <item>Attempted to carry a robot</item>
-        <item>Hooked bar and attempted climb</item>
-        <item>Successful climb on another robot</item>
-        <item>Successful climb with another robot attached</item>
-        <item>Successful climb on own</item>
+        <item>Did not climb</item>
+        <item>Level 1</item>
+        <item>Level 2</item>
+        <item>Level 3</item>
     </string-array>
 </resources>

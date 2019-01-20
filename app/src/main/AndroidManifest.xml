@@ -18,7 +18,7 @@
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup">
         <activity
-            android:name=".activities.MatchScoutingActivity"
+            android:name=".activities.match.MatchScoutingActivity"
             android:parentActivityName=".activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
@@ -43,16 +43,16 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.PitScoutingActivity"
+            android:name=".activities.pit.PitScoutingActivity"
             android:parentActivityName=".activities.MainActivity" />
         <activity
-            android:name=".activities.MatchHistoryActivity"
-            android:parentActivityName=".activities.MatchScoutingActivity" />
+            android:name=".activities.match.MatchHistoryActivity"
+            android:parentActivityName=".activities.match.MatchScoutingActivity" />
         <activity
-            android:name=".activities.PitHistoryActivity"
-            android:parentActivityName=".activities.PitScoutingActivity" />
+            android:name=".activities.pit.PitHistoryActivity"
+            android:parentActivityName=".activities.pit.PitScoutingActivity" />
         <activity
-            android:name=".activities.PitQueueActivity"
-            android:parentActivityName=".activities.PitScoutingActivity" />
+            android:name=".activities.pit.PitQueueActivity"
+            android:parentActivityName=".activities.pit.PitScoutingActivity" />
     </application>
 </manifest>

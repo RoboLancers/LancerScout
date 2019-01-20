@@ -7,7 +7,7 @@
     android:focusable="true"
     android:focusableInTouchMode="true"
     android:orientation="vertical"
-    tools:context=".activities.MatchScoutingActivity"
+    tools:context=".activities.match.MatchScoutingActivity"
     tools:targetApi="o">
 
     <android.support.v7.widget.Toolbar
@@ -140,26 +140,20 @@
                         android:text="@string/starting_configuration" />
 
                     <RadioButton
-                        android:id="@+id/leftStartingConfiguration"
+                        android:id="@+id/level1StartingConfiguration"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:checked="true"
-                        android:text="@string/left" />
+                        android:text="@string/level_1" />
 
                     <RadioButton
-                        android:id="@+id/middleStartingConfiguration"
+                        android:id="@+id/level2StartingConfiguration"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="@string/middle" />
+                        android:text="@string/level_2" />
 
-                    <RadioButton
-                        android:id="@+id/rightStartingConfiguration"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/right" />
                 </RadioGroup>
 
             </LinearLayout>
@@ -175,39 +169,50 @@
                 android:textAlignment="center"
                 android:textSize="24sp" />
 
-            <CheckBox
-                android:id="@+id/crossedAutoLineCheckBox"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:text="@string/crossed_auto_line"
-                android:textAlignment="textStart" />
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
 
-            <Spinner
-                android:id="@+id/autoCubePlacementSpinner"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:entries="@array/AutoCubeAttempts" />
+                <CheckBox
+                    android:id="@+id/crossedAutoLineCheckBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:checked="true"
+                    android:text="@string/crossed_auto_line"
+                    android:textAlignment="textStart" />
 
-            <CheckBox
-                android:id="@+id/wrongSideAutoCheckBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:text="@string/cube_on_wrong_side_of_switch_scale" />
+                <RadioGroup
+                    android:id="@+id/sandstormRadioGroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/sandstorm"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/sandstorm"
+                        android:textAlignment="center" />
+
+                    <RadioButton
+                        android:id="@+id/autonomousSandstorm"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/autonomous" />
+
+                    <RadioButton
+                        android:id="@+id/driverControlledSandstorm"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:text="@string/driver_controlled" />
+                </RadioGroup>
+            </LinearLayout>
 
             <View style="@style/Divider" />
 
-            <TextView
-                android:id="@+id/teleopSectionLabel"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:text="@string/teleop"
-                android:textAlignment="center"
-                android:textSize="24sp" />
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -215,7 +220,7 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/allianceSwitchSubtract"
+                    android:id="@+id/rocketCargoSubtract"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -231,14 +236,14 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/allianceSwitchLabel"
+                        android:id="@+id/rocketCargoLabel"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/alliance_switch"
+                        android:text="@string/rocket_cargo"
                         android:textAlignment="center" />
 
                     <TextView
-                        android:id="@+id/allianceSwitchCounter"
+                        android:id="@+id/rocketCargoCounter"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/zero"
@@ -246,7 +251,7 @@
                 </LinearLayout>
 
                 <Button
-                    android:id="@+id/allianceSwitchAdd"
+                    android:id="@+id/rocketCargoAdd"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -264,7 +269,7 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/centerScaleSubtract"
+                    android:id="@+id/rocketHatchSubtract"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -279,14 +284,14 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/centerScaleLabel"
+                        android:id="@+id/rocketHatchLabel"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/center_scale"
+                        android:text="@string/rocket_hatch"
                         android:textAlignment="center" />
 
                     <TextView
-                        android:id="@+id/centerScaleCounter"
+                        android:id="@+id/rocketHatchCounter"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/zero"
@@ -294,7 +299,7 @@
                 </LinearLayout>
 
                 <Button
-                    android:id="@+id/centerScaleAdd"
+                    android:id="@+id/rocketHatchAdd"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -311,7 +316,7 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/opponentSwitchSubtract"
+                    android:id="@+id/shipCargoSubtract"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -326,14 +331,14 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/opponentSwitchLabel"
+                        android:id="@+id/shipCargoLabel"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/opponent_switch"
+                        android:text="@string/ship_cargo"
                         android:textAlignment="center" />
 
                     <TextView
-                        android:id="@+id/opponentSwitchCounter"
+                        android:id="@+id/shipCargoCounter"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/zero"
@@ -341,7 +346,7 @@
                 </LinearLayout>
 
                 <Button
-                    android:id="@+id/opponentSwitchAdd"
+                    android:id="@+id/shipCargoAdd"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -358,7 +363,7 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/exchangeSubtract"
+                    android:id="@+id/shipHatchSubtract"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -373,14 +378,14 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/exchangeLabel"
+                        android:id="@+id/shipHatchLabel"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/exchange"
+                        android:text="@string/ship_hatch"
                         android:textAlignment="center" />
 
                     <TextView
-                        android:id="@+id/exchangeCounter"
+                        android:id="@+id/shipHatchCounter"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/zero"
@@ -388,7 +393,7 @@
                 </LinearLayout>
 
                 <Button
-                    android:id="@+id/exchangeAdd"
+                    android:id="@+id/shipHatchAdd"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"

@@ -7,7 +7,7 @@
     android:focusable="true"
     android:focusableInTouchMode="true"
     android:orientation="vertical"
-    tools:context=".activities.MatchScoutingActivity"
+    tools:context=".activities.match.MatchScoutingActivity"
     tools:ignore="NestedWeights"
     tools:targetApi="o">
 

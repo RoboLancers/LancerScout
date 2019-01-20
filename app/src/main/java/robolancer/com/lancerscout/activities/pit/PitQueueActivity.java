@@ -1,4 +1,4 @@
-package robolancer.com.lancerscout.activities;
+package robolancer.com.lancerscout.activities.pit;
 
 import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
@@ -12,6 +12,7 @@ import android.widget.ListView;
 import java.util.ArrayList;
 
 import robolancer.com.lancerscout.R;
+import robolancer.com.lancerscout.activities.LancerActivity;
 import robolancer.com.lancerscout.bluetooth.BluetoothHelper;
 import robolancer.com.lancerscout.models.pit.LancerPit;
 import robolancer.com.lancerscout.utilities.LancerScoutUtility;

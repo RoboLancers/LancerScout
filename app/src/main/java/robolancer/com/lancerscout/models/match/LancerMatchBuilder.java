@@ -5,13 +5,15 @@ public class LancerMatchBuilder {
     private int teamNumber;
     private AllianceColor color;
     private StartingConfiguration startingConfiguration;
+
     private boolean crossedAutoLine;
-    private AutonomousAttempt autonomousAttempt;
-    private boolean wrongSideAuto;
-    private int allianceSwitch;
-    private int centerScale;
-    private int opponentSwitch;
-    private int exchange;
+    private Sandstorm sandstorm;
+
+    private int rocketCargo;
+    private int rocketHatch;
+    private int shipCargo;
+    private int shipHatch;
+
     private EndGameAttempt endGameAttempt;
     private boolean brokeDown;
     private String comment;
@@ -41,33 +43,28 @@ public class LancerMatchBuilder {
         return this;
     }
 
-    public LancerMatchBuilder setAutonomousAttempt(AutonomousAttempt autonomousAttempt) {
-        this.autonomousAttempt = autonomousAttempt;
+    public LancerMatchBuilder setSandstorm(Sandstorm sandstorm) {
+        this.sandstorm = sandstorm;
         return this;
     }
 
-    public LancerMatchBuilder setWrongSideAuto(boolean wrongSideAuto) {
-        this.wrongSideAuto = wrongSideAuto;
+    public LancerMatchBuilder setRocketCargo(int rocketCargo) {
+        this.rocketCargo = rocketCargo;
         return this;
     }
 
-    public LancerMatchBuilder setAllianceSwitch(int allianceSwitch) {
-        this.allianceSwitch = allianceSwitch;
+    public LancerMatchBuilder setRocketHatch(int rocketHatch) {
+        this.rocketHatch = rocketHatch;
         return this;
     }
 
-    public LancerMatchBuilder setCenterScale(int centerScale) {
-        this.centerScale = centerScale;
+    public LancerMatchBuilder setShipCargo(int shipCargo) {
+        this.shipCargo = shipCargo;
         return this;
     }
 
-    public LancerMatchBuilder setOpponentSwitch(int opponentSwitch) {
-        this.opponentSwitch = opponentSwitch;
-        return this;
-    }
-
-    public LancerMatchBuilder setExchange(int exchange) {
-        this.exchange = exchange;
+    public LancerMatchBuilder setShipHatch(int shipHatch) {
+        this.shipHatch = shipHatch;
         return this;
     }
 
@@ -87,6 +84,6 @@ public class LancerMatchBuilder {
     }
 
     public LancerMatch createLancerMatch() {
-        return new LancerMatch(matchNumber, teamNumber, color, startingConfiguration, crossedAutoLine, autonomousAttempt, wrongSideAuto, allianceSwitch, centerScale, opponentSwitch, exchange, endGameAttempt, brokeDown, comment);
+        return new LancerMatch(matchNumber, teamNumber, color, startingConfiguration, crossedAutoLine, sandstorm, rocketCargo, rocketHatch, shipCargo, shipHatch, endGameAttempt, brokeDown, comment);
     }
 }

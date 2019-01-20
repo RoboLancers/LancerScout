@@ -4,38 +4,35 @@ import java.io.Serializable;
 import java.util.Objects;
 
 public class LancerMatch implements Serializable {
-
     private int matchNumber;
     private int teamNumber;
     private AllianceColor color;
     private StartingConfiguration startingConfiguration;
 
     private boolean crossedAutoLine;
-    private AutonomousAttempt autonomousAttempt;
-    private boolean wrongSideAuto;
+    private Sandstorm sandstorm;
 
-    private int allianceSwitch;
-    private int centerScale;
-    private int opponentSwitch;
-    private int exchange;
+    private int rocketCargo;
+    private int rocketHatch;
+    private int shipCargo;
+    private int shipHatch;
 
     private EndGameAttempt endGameAttempt;
     private boolean robotBrokeDown;
 
     private String comment;
 
-    public LancerMatch(int matchNumber, int teamNumber, AllianceColor color, StartingConfiguration startingConfiguration, boolean crossedAutoLine, AutonomousAttempt autonomousAttempt, boolean wrongSideAuto, int allianceSwitch, int centerScale, int opponentSwitch, int exchange, EndGameAttempt endGameAttempt, boolean robotBrokeDown, String comment) {
+    public LancerMatch(int matchNumber, int teamNumber, AllianceColor color, StartingConfiguration startingConfiguration, boolean crossedAutoLine, Sandstorm sandstorm, int rocketCargo, int rocketHatch, int shipCargo, int shipHatch, EndGameAttempt endGameAttempt, boolean robotBrokeDown, String comment) {
         this.matchNumber = matchNumber;
         this.teamNumber = teamNumber;
         this.color = color;
         this.startingConfiguration = startingConfiguration;
         this.crossedAutoLine = crossedAutoLine;
-        this.autonomousAttempt = autonomousAttempt;
-        this.wrongSideAuto = wrongSideAuto;
-        this.allianceSwitch = allianceSwitch;
-        this.centerScale = centerScale;
-        this.opponentSwitch = opponentSwitch;
-        this.exchange = exchange;
+        this.sandstorm = sandstorm;
+        this.rocketCargo = rocketCargo;
+        this.rocketHatch = rocketHatch;
+        this.shipCargo = shipCargo;
+        this.shipHatch = shipHatch;
         this.endGameAttempt = endGameAttempt;
         this.robotBrokeDown = robotBrokeDown;
         this.comment = comment;
@@ -61,28 +58,24 @@ public class LancerMatch implements Serializable {
         return crossedAutoLine;
     }
 
-    public AutonomousAttempt getAutonomousAttempt() {
-        return autonomousAttempt;
+    public Sandstorm getSandstorm() {
+        return sandstorm;
     }
 
-    public boolean getWrongSideAuto() {
-        return wrongSideAuto;
+    public int getRocketCargo() {
+        return rocketCargo;
     }
 
-    public int getAllianceSwitch() {
-        return allianceSwitch;
+    public int getRocketHatch() {
+        return rocketHatch;
     }
 
-    public int getCenterScale() {
-        return centerScale;
+    public int getShipHatch() {
+        return shipHatch;
     }
 
-    public int getOpponentSwitch() {
-        return opponentSwitch;
-    }
-
-    public int getExchange() {
-        return exchange;
+    public int getShipCargo() {
+        return shipCargo;
     }
 
     public EndGameAttempt getEndGameAttempt() {
@@ -117,7 +110,7 @@ public class LancerMatch implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(matchNumber, teamNumber, color, startingConfiguration, crossedAutoLine, autonomousAttempt, wrongSideAuto, allianceSwitch, centerScale, opponentSwitch, exchange, endGameAttempt, robotBrokeDown, comment);
+        return Objects.hash(matchNumber, teamNumber, color, startingConfiguration, crossedAutoLine, sandstorm, rocketCargo, rocketHatch, shipCargo, shipHatch, endGameAttempt, robotBrokeDown, comment);
     }
 
     public String getMatchInfo(LancerMatch match){
@@ -135,24 +128,21 @@ public class LancerMatch implements Serializable {
         matchInfo.append(match.getCrossedAutoLine());
         matchInfo.append("\n");
         matchInfo.append("Autonomous Attempt: ");
-        matchInfo.append(match.getAutonomousAttempt());
-        matchInfo.append("\n");
-        matchInfo.append("Put cube on wrong side? ");
-        matchInfo.append(match.getWrongSideAuto() ? "Yes" : "No");
+        matchInfo.append(match.getSandstorm());
         matchInfo.append("\n");
 
         matchInfo.append("\nTeleOp\n");
-        matchInfo.append("Alliance Switch: ");
-        matchInfo.append(match.getAllianceSwitch());
+        matchInfo.append("Rocket Cargo: ");
+        matchInfo.append(match.getRocketCargo());
         matchInfo.append("\n");
-        matchInfo.append("Center Scale: ");
-        matchInfo.append(match.getCenterScale());
+        matchInfo.append("Rocket Hatch: ");
+        matchInfo.append(match.getRocketHatch());
         matchInfo.append("\n");
-        matchInfo.append("Opponent Switch: ");
-        matchInfo.append(match.getOpponentSwitch());
+        matchInfo.append("Ship Cargo: ");
+        matchInfo.append(match.getShipCargo());
         matchInfo.append("\n");
-        matchInfo.append("Exchange: ");
-        matchInfo.append(match.getExchange());
+        matchInfo.append("Ship Hatch: ");
+        matchInfo.append(match.getShipHatch());
         matchInfo.append("\n");
 
         matchInfo.append("\nEnd Game\n");
@@ -169,4 +159,6 @@ public class LancerMatch implements Serializable {
 
         return matchInfo.toString();
     }
+
+
 }

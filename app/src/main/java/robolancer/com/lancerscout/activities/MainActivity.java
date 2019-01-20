@@ -12,6 +12,8 @@ import android.widget.Toast;
 import java.util.Set;
 
 import robolancer.com.lancerscout.R;
+import robolancer.com.lancerscout.activities.match.MatchScoutingActivity;
+import robolancer.com.lancerscout.activities.pit.PitScoutingActivity;
 
 public class MainActivity extends LancerActivity {
     @Override
