@@ -4,20 +4,25 @@ import java.io.Serializable;
 
 @SuppressWarnings("WeakerAccess")
 public class LancerPit implements Serializable {
-
     private int teamNumber;
     private Drivetrain drivetrain;
-    private CubeIntake cubeIntake;
+
+    private Intake cargoIntake;
+    private Intake hatchIntake;
     private Climb climb;
+
     private int robotWeight;
     private ProgrammingLanguage programmingLanguage;
     private String comments;
 
-    public LancerPit(int teamNumber, Drivetrain drivetrain, CubeIntake cubeIntake, Climb climb, int robotWeight, ProgrammingLanguage programmingLanguage, String comments) {
+    public LancerPit(int teamNumber, Drivetrain drivetrain, Intake cargoIntake, Intake hatchIntake, Climb climb, int robotWeight, ProgrammingLanguage programmingLanguage, String comments) {
         this.teamNumber = teamNumber;
         this.drivetrain = drivetrain;
-        this.cubeIntake = cubeIntake;
+
+        this.cargoIntake = cargoIntake;
+        this.hatchIntake = hatchIntake;
         this.climb = climb;
+
         this.robotWeight = robotWeight;
         this.programmingLanguage = programmingLanguage;
         this.comments = comments;
@@ -31,8 +36,12 @@ public class LancerPit implements Serializable {
         return drivetrain;
     }
 
-    public CubeIntake getCubeIntake() {
-        return cubeIntake;
+    public Intake getCargoIntake() {
+        return cargoIntake;
+    }
+
+    public Intake getHatchIntake(){
+        return hatchIntake;
     }
 
     public Climb getClimb() {

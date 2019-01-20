@@ -1,15 +1,14 @@
 package robolancer.com.lancerscout.models.pit;
 
-public enum CubeIntake {
-
+public enum Intake {
     FLOOR_INTAKE("Floor Intake"),
     HUMAN_INTAKE("Portal/Exchange Intake"),
     BOTH_INTAKES("Both Intakes"),
-    NONE_INTAKE("None");
+    NO_INTAKE("None");
 
     private final String name;
 
-    CubeIntake(String name) {
+    Intake(String name) {
         this.name = name;
     }
 

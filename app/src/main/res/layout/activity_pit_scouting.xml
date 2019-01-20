@@ -85,6 +85,53 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0"
+                    android:paddingRight="20dp"
+                    android:text="@string/climb"
+                    android:textAlignment="center"
+                    android:textSize="25sp" />
+
+                <RadioGroup
+                    android:id="@+id/climbingRadioGroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/level1Climb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/level_1" />
+
+                    <RadioButton
+                        android:id="@+id/level2Climb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/level_2" />
+
+                    <RadioButton
+                        android:id="@+id/level3Climb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/level_3" />
+
+                </RadioGroup>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="10dp"
                 android:baselineAligned="false"
@@ -100,39 +147,39 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="0"
-                        android:text="@string/cube_intake"
+                        android:text="Hatch Intake"
                         android:textAlignment="center"
                         android:textSize="25sp" />
 
                     <RadioGroup
-                        android:id="@+id/cubeIntakeRadioGroup"
+                        android:id="@+id/hatchIntakeRadioGroup"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="0">
 
                         <RadioButton
-                            android:id="@+id/floorIntakeRadioButton"
+                            android:id="@+id/hatchFloorIntakeRadioButton"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="@string/floor_intake" />
 
                         <RadioButton
-                            android:id="@+id/humanIntakeRadioButton"
+                            android:id="@+id/hatchHumanIntakeRadioButton"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="@string/portal_exchange_intake" />
 
                         <RadioButton
-                            android:id="@+id/bothIntakeRadioButton"
+                            android:id="@+id/hatchBothIntakeRadioButton"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="@string/both_intakes" />
 
                         <RadioButton
-                            android:id="@+id/noneIntakeRadioButton"
+                            android:id="@+id/hatchNoneIntakeRadioButton"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -143,7 +190,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="0.5"
                     android:orientation="vertical">
 
@@ -151,53 +198,39 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="0"
-                        android:text="@string/climb"
+                        android:text="Cargo Intake"
                         android:textAlignment="center"
                         android:textSize="25sp" />
 
                     <RadioGroup
-                        android:id="@+id/climbingRadioGroup"
+                        android:id="@+id/cargoIntakeRadioGroup"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="0">
 
                         <RadioButton
-                            android:id="@+id/soloClimberRadioButton"
+                            android:id="@+id/cargoFloorIntakeRadioButton"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="@string/solo_climber" />
+                            android:text="@string/floor_intake" />
 
                         <RadioButton
-                            android:id="@+id/climberRamp1RadioButton"
+                            android:id="@+id/cargoHumanIntakeRadioButton"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="@string/climber_with_ramp_for_one_robot" />
+                            android:text="@string/portal_exchange_intake" />
 
                         <RadioButton
-                            android:id="@+id/climberRamp2RadioButton"
+                            android:id="@+id/cargoBothIntakeRadioButton"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="@string/climber_with_ramp_for_two_robots" />
+                            android:text="@string/both_intakes" />
 
                         <RadioButton
-                            android:id="@+id/ramp1RadioButton"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@string/ramp_for_one_robot" />
-
-                        <RadioButton
-                            android:id="@+id/ramp2RadioButton"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@string/ramp_for_two_robots" />
-
-                        <RadioButton
-                            android:id="@+id/noneClimberRadioButton"
+                            android:id="@+id/cargoNoneIntakeRadioButton"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"

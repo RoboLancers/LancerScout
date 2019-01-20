@@ -3,8 +3,11 @@ package robolancer.com.lancerscout.models.pit;
 public class LancerPitBuilder {
     private int teamNumber;
     private Drivetrain drivetrain;
-    private CubeIntake cubeIntake;
+
+    private Intake cargoIntake;
+    private Intake hatchIntake;
     private Climb climb;
+
     private int robotWeight;
     private ProgrammingLanguage programmingLanguage;
     private String comments;
@@ -19,8 +22,13 @@ public class LancerPitBuilder {
         return this;
     }
 
-    public LancerPitBuilder setCubeIntake(CubeIntake cubeIntake) {
-        this.cubeIntake = cubeIntake;
+    public LancerPitBuilder setCargoIntake(Intake intake) {
+        this.cargoIntake = intake;
+        return this;
+    }
+
+    public LancerPitBuilder setHatchIntake(Intake intake) {
+        this.hatchIntake = intake;
         return this;
     }
 
@@ -45,6 +53,6 @@ public class LancerPitBuilder {
     }
 
     public LancerPit createLancerPit() {
-        return new LancerPit(teamNumber, drivetrain, cubeIntake, climb, robotWeight, programmingLanguage, comments);
+        return new LancerPit(teamNumber, drivetrain, cargoIntake, hatchIntake, climb, robotWeight, programmingLanguage, comments);
     }
 }

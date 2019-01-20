@@ -21,7 +21,7 @@ import robolancer.com.lancerscout.R;
 import robolancer.com.lancerscout.activities.LancerActivity;
 import robolancer.com.lancerscout.bluetooth.BluetoothHelper;
 import robolancer.com.lancerscout.models.pit.Climb;
-import robolancer.com.lancerscout.models.pit.CubeIntake;
+import robolancer.com.lancerscout.models.pit.Intake;
 import robolancer.com.lancerscout.models.pit.Drivetrain;
 import robolancer.com.lancerscout.models.pit.LancerPit;
 import robolancer.com.lancerscout.models.pit.LancerPitBuilder;
@@ -36,7 +36,9 @@ public class PitScoutingActivity extends LancerActivity {
 
     EditText teamNumberEditText;
     Spinner drivetrainSpinner;
-    RadioGroup cubeIntakeGroup, climbGroup;
+
+    RadioGroup hatchIntakeGroup, cargoIntakeGroup, climbGroup;
+
     EditText robotWeightEditText;
     Spinner programmingLanguageSpinner;
     EditText comments;
@@ -96,8 +98,11 @@ public class PitScoutingActivity extends LancerActivity {
             }
 
             setSpinnerDrivetrain(lancerPit.getDrivetrain());
-            setRadioCubeIntake(lancerPit.getCubeIntake());
+
+            setRadioCargoIntake(lancerPit.getCargoIntake());
+            setRadioHatchIntake(lancerPit.getHatchIntake());
             setRadioClimb(lancerPit.getClimb());
+
             robotWeightEditText.setText(String.valueOf(lancerPit.getRobotWeight()));
             setSpinnerProgrammingLanguage(lancerPit.getProgrammingLanguage());
             comments.setText(lancerPit.getComments());
@@ -119,8 +124,11 @@ public class PitScoutingActivity extends LancerActivity {
 
             teamNumberEditText.setText(String.valueOf(lancerPit.getTeamNumber()));
             setSpinnerDrivetrain(lancerPit.getDrivetrain());
-            setRadioCubeIntake(lancerPit.getCubeIntake());
+
+            setRadioCargoIntake(lancerPit.getCargoIntake());
+            setRadioHatchIntake(lancerPit.getHatchIntake());
             setRadioClimb(lancerPit.getClimb());
+
             robotWeightEditText.setText(String.valueOf(lancerPit.getRobotWeight()));
             setSpinnerProgrammingLanguage(lancerPit.getProgrammingLanguage());
             comments.setText(lancerPit.getComments());
@@ -132,8 +140,11 @@ public class PitScoutingActivity extends LancerActivity {
 
             teamNumberEditText.setText(String.valueOf(lancerPit.getTeamNumber()));
             setSpinnerDrivetrain(lancerPit.getDrivetrain());
-            setRadioCubeIntake(lancerPit.getCubeIntake());
+
+            setRadioCargoIntake(lancerPit.getCargoIntake());
+            setRadioHatchIntake(lancerPit.getHatchIntake());
             setRadioClimb(lancerPit.getClimb());
+
             robotWeightEditText.setText(String.valueOf(lancerPit.getRobotWeight()));
             setSpinnerProgrammingLanguage(lancerPit.getProgrammingLanguage());
             comments.setText(lancerPit.getComments());
@@ -216,7 +227,8 @@ public class PitScoutingActivity extends LancerActivity {
         return new LancerPitBuilder()
                 .setTeamNumber(Integer.parseInt(teamNumberEditText.getText().toString()))
                 .setDrivetrain((Drivetrain) drivetrainSpinner.getSelectedItem())
-                .setCubeIntake(getCubeIntakeFromRadio())
+                .setCargoIntake(getCargoIntakeFromRadio())
+                .setHatchIntake(getHatchIntakeFromRadio())
                 .setClimb(getClimbFromRadio())
                 .setRobotWeight(robotWeight)
                 .setProgrammingLanguage((ProgrammingLanguage) programmingLanguageSpinner.getSelectedItem())
@@ -230,7 +242,8 @@ public class PitScoutingActivity extends LancerActivity {
         teamNumberEditText = findViewById(R.id.pitTeamNumber);
         drivetrainSpinner = findViewById(R.id.drivetrainSpinner);
 
-        cubeIntakeGroup = findViewById(R.id.cubeIntakeRadioGroup);
+        hatchIntakeGroup = findViewById(R.id.hatchIntakeRadioGroup);
+        cargoIntakeGroup = findViewById(R.id.cargoIntakeRadioGroup);
         climbGroup = findViewById(R.id.climbingRadioGroup);
 
         robotWeightEditText = findViewById(R.id.robotWeight);
@@ -245,7 +258,7 @@ public class PitScoutingActivity extends LancerActivity {
     public void reset() {
         teamNumberEditText.setText("");
         drivetrainSpinner.setSelection(0);
-        cubeIntakeGroup.check(R.id.noneIntakeRadioButton);
+        hatchIntakeGroup.check(R.id.noneIntakeRadioButton);
         climbGroup.check(R.id.noneClimberRadioButton);
         robotWeightEditText.setText("");
         programmingLanguageSpinner.setSelection(0);
@@ -267,7 +280,8 @@ public class PitScoutingActivity extends LancerActivity {
         String json = gson.toJson(new LancerPitBuilder()
                 .setTeamNumber(team)
                 .setDrivetrain((Drivetrain) drivetrainSpinner.getSelectedItem())
-                .setCubeIntake(getCubeIntakeFromRadio())
+                .setCargoIntake(getCargoIntakeFromRadio())
+                .setHatchIntake(getHatchIntakeFromRadio())
                 .setClimb(getClimbFromRadio())
                 .setRobotWeight(robotWeight)
                 .setProgrammingLanguage((ProgrammingLanguage) programmingLanguageSpinner.getSelectedItem())
@@ -281,37 +295,46 @@ public class PitScoutingActivity extends LancerActivity {
         editor.apply();
     }
 
-    private CubeIntake getCubeIntakeFromRadio() {
-        switch (cubeIntakeGroup.getCheckedRadioButtonId()) {
+    private Intake getCargoIntakeFromRadio() {
+        switch (cargoIntakeGroup.getCheckedRadioButtonId()) {
             case R.id.floorIntakeRadioButton:
-                return CubeIntake.FLOOR_INTAKE;
+                return Intake.FLOOR_INTAKE;
             case R.id.humanIntakeRadioButton:
-                return CubeIntake.HUMAN_INTAKE;
+                return Intake.HUMAN_INTAKE;
             case R.id.bothIntakeRadioButton:
-                return CubeIntake.BOTH_INTAKES;
+                return Intake.BOTH_INTAKES;
             case R.id.noneIntakeRadioButton:
-                return CubeIntake.NONE_INTAKE;
+                return Intake.NO_INTAKE;
             default:
-                return CubeIntake.FLOOR_INTAKE;
+                return Intake.FLOOR_INTAKE;
+        }
+    }
+
+    private Intake getHatchIntakeFromRadio() {
+        switch (hatchIntakeGroup.getCheckedRadioButtonId()) {
+            case R.id.floorIntakeRadioButton:
+                return Intake.FLOOR_INTAKE;
+            case R.id.humanIntakeRadioButton:
+                return Intake.HUMAN_INTAKE;
+            case R.id.bothIntakeRadioButton:
+                return Intake.BOTH_INTAKES;
+            case R.id.noneIntakeRadioButton:
+                return Intake.NO_INTAKE;
+            default:
+                return Intake.FLOOR_INTAKE;
         }
     }
 
     private Climb getClimbFromRadio() {
         switch (climbGroup.getCheckedRadioButtonId()) {
-            case R.id.soloClimberRadioButton:
-                return Climb.SOLO_CLIMB;
-            case R.id.climberRamp1RadioButton:
-                return Climb.CLIMBER_WITH_RAMP_1;
-            case R.id.climberRamp2RadioButton:
-                return Climb.CLIMBER_WITH_RAMP_2;
-            case R.id.ramp1RadioButton:
-                return Climb.RAMP_1;
-            case R.id.ramp2RadioButton:
-                return Climb.RAMP_2;
-            case R.id.noneClimberRadioButton:
-                return Climb.NONE_INTAKE;
+            case R.id.level1Climb:
+                return Climb.LEVEL_1;
+            case R.id.level2Climb:
+                return Climb.LEVEL_2;
+            case R.id.level3Climb:
+                return Climb.LEVEL_3;
             default:
-                return Climb.SOLO_CLIMB;
+                return Climb.LEVEL_1;
         }
     }
 
@@ -320,48 +343,56 @@ public class PitScoutingActivity extends LancerActivity {
         drivetrainSpinner.setSelection(adapter.getPosition(drivetrain));
     }
 
-    private void setRadioCubeIntake(CubeIntake cubeIntake) {
-        switch (cubeIntake) {
+    private void setRadioCargoIntake(Intake intake) {
+        switch (intake) {
             case FLOOR_INTAKE:
-                cubeIntakeGroup.check(R.id.floorIntakeRadioButton);
+                hatchIntakeGroup.check(R.id.cargoFloorIntakeRadioButton);
                 break;
             case HUMAN_INTAKE:
-                cubeIntakeGroup.check(R.id.humanIntakeRadioButton);
+                hatchIntakeGroup.check(R.id.cargoHumanIntakeRadioButton);
                 break;
             case BOTH_INTAKES:
-                cubeIntakeGroup.check(R.id.bothIntakeRadioButton);
+                hatchIntakeGroup.check(R.id.cargoBothIntakeRadioButton);
                 break;
-            case NONE_INTAKE:
-                cubeIntakeGroup.check(R.id.noneIntakeRadioButton);
+            case NO_INTAKE:
+                hatchIntakeGroup.check(R.id.cargoNoneIntakeRadioButton);
                 break;
             default:
-                cubeIntakeGroup.check(R.id.floorIntakeRadioButton);
+                hatchIntakeGroup.check(R.id.cargoFloorIntakeRadioButton);
+                break;
+        }
+    }
+
+    private void setRadioHatchIntake(Intake intake) {
+        switch (intake) {
+            case FLOOR_INTAKE:
+                hatchIntakeGroup.check(R.id.hatchFloorIntakeRadioButton);
+                break;
+            case HUMAN_INTAKE:
+                hatchIntakeGroup.check(R.id.hatchHumanIntakeRadioButton);
+                break;
+            case BOTH_INTAKES:
+                hatchIntakeGroup.check(R.id.hatchBothIntakeRadioButton);
+                break;
+            case NO_INTAKE:
+                hatchIntakeGroup.check(R.id.hatchNoneIntakeRadioButton);
+                break;
+            default:
+                hatchIntakeGroup.check(R.id.hatchFloorIntakeRadioButton);
                 break;
         }
     }
 
     private void setRadioClimb(Climb climb) {
         switch (climb) {
-            case SOLO_CLIMB:
-                climbGroup.check(R.id.soloClimberRadioButton);
-                break;
-            case CLIMBER_WITH_RAMP_1:
-                climbGroup.check(R.id.climberRamp1RadioButton);
-                break;
-            case CLIMBER_WITH_RAMP_2:
-                climbGroup.check(R.id.climberRamp2RadioButton);
-                break;
-            case RAMP_1:
-                climbGroup.check(R.id.ramp1RadioButton);
-                break;
-            case RAMP_2:
-                climbGroup.check(R.id.ramp2RadioButton);
-                break;
-            case NONE_INTAKE:
-                climbGroup.check(R.id.noneClimberRadioButton);
-                break;
+            case LEVEL_1:
+                climbGroup.check(R.id.level1Climb);
+            case LEVEL_2:
+                climbGroup.check(R.id.level2Climb);
+            case LEVEL_3:
+                climbGroup.check(R.id.level3Climb);
             default:
-                climbGroup.check(R.id.soloClimberRadioButton);
+                climbGroup.check(R.id.level1Climb);
                 break;
         }
     }

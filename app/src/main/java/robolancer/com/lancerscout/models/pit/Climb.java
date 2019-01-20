@@ -1,12 +1,9 @@
 package robolancer.com.lancerscout.models.pit;
 
 public enum Climb {
-    SOLO_CLIMB("Solo Climb"),
-    CLIMBER_WITH_RAMP_1("Climber with ramp for one robot"),
-    CLIMBER_WITH_RAMP_2("Climber with ramp for two robots"),
-    RAMP_1("Ramp for one robot"),
-    RAMP_2("Ramp for two robots"),
-    NONE_INTAKE("None");
+    LEVEL_1("Level 1"),
+    LEVEL_2("Level 2"),
+    LEVEL_3("Level 3");
 
     private final String name;
 
