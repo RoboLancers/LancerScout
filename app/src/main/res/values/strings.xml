@@ -64,6 +64,7 @@
     <string name="sandstorm">Sandstorm</string>
     <string name="driver_controlled">Driver Controlled</string>
     <string name="level_3">Level 3</string>
+    <string name="pit_queue">Pit Queue</string>
 
     <string-array name="ProgrammingLanguage">
         <item>Java</item>

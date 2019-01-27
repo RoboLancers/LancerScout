@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
@@ -30,10 +31,6 @@ import robolancer.com.lancerscout.utilities.LancerScoutUtility;
 
 @SuppressWarnings("unchecked")
 public class PitScoutingActivity extends LancerActivity {
-    BluetoothHelper bluetoothHelper;
-    BluetoothAdapter bluetoothAdapter;
-    Thread bluetoothThread;
-
     EditText teamNumberEditText;
     Spinner drivetrainSpinner;
 
@@ -48,26 +45,6 @@ public class PitScoutingActivity extends LancerActivity {
         setContentView(R.layout.activity_pit_scouting);
 
         findViews();
-
-        bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-
-        if (bluetoothAdapter == null) {
-            new AlertDialog.Builder(this)
-                    .setTitle("Not compatible")
-                    .setMessage("Your phone does not support Bluetooth")
-                    .setPositiveButton("Exit", (dialog, which) -> System.exit(0))
-                    .setIcon(android.R.drawable.ic_dialog_alert)
-                    .show();
-        }
-
-        if (!bluetoothAdapter.isEnabled()) {
-            startActivityForResult(new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE), 0);
-        }
-
-        bluetoothHelper = new BluetoothHelper(this, bluetoothAdapter);
-
-        bluetoothThread = new Thread(bluetoothHelper);
-        bluetoothThread.start();
     }
 
     @Override
@@ -162,7 +139,12 @@ public class PitScoutingActivity extends LancerActivity {
         switch (item.getItemId()) {
             case R.id.pit_send:
                 if (teamNumberEditText.getText().toString().isEmpty()) {
-                    Toast.makeText(PitScoutingActivity.this, "Team number can't be empty", Toast.LENGTH_LONG).show();
+                    if(PitQueueActivity.queuedPits.isEmpty()){
+                        Toast.makeText(PitScoutingActivity.this, "Team number or pit queue can't be empty", Toast.LENGTH_LONG).show();
+                    }else{
+
+                    }
+
                     break;
                 }
 
@@ -175,18 +157,19 @@ public class PitScoutingActivity extends LancerActivity {
                             String json = gson.toJson(lancerPit);
                             PitHistoryActivity.pitHistory.add(lancerPit);
 
-                            StringBuilder data = new StringBuilder("PIT-" + json + "\n");
+                            StringBuilder data = new StringBuilder("PIT-" + json + " ");
+
+                            Log.e("Debuggings", Integer.toString(PitQueueActivity.queuedPits.size()));
 
                             for (LancerPit queuedPit : PitQueueActivity.queuedPits) {
                                 json = gson.toJson(queuedPit);
-                                data.append("PIT-").append(json).append("\n");
+                                data.append(json).append(" ");
+
                                 PitHistoryActivity.pitHistory.add(queuedPit);
                             }
 
                             bluetoothHelper.showPairedBluetoothDevices(true, data.toString(), this);
                         }).show();
-
-                PitQueueActivity.queuedPits.clear();
                 break;
             case R.id.pit_reset:
                 AlertDialog.Builder resetDialog = new AlertDialog.Builder(PitScoutingActivity.this);
@@ -204,11 +187,13 @@ public class PitScoutingActivity extends LancerActivity {
                     break;
                 }
 
-                LancerPit lancerPit = createLancerPitFromField();
-
-                PitQueueActivity.queuedPits.add(lancerPit);
+                PitQueueActivity.queuedPits.add(createLancerPitFromField());
+                Log.e("Debuggings", Integer.toString(PitQueueActivity.queuedPits.size()));
 
                 reset();
+                break;
+            case R.id.pit_queue:
+                startActivity(new Intent(PitScoutingActivity.this, PitQueueActivity.class));
                 break;
             default:
                 return super.onOptionsItemSelected(item);

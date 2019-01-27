@@ -24,4 +24,7 @@
         android:icon="@drawable/history_white_24dp"
         android:title="@string/pit_history"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/pit_queue"
+        android:title="@string/pit_queue" />
 </menu>

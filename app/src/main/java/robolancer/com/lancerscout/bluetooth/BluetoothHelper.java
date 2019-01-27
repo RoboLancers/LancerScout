@@ -21,6 +21,7 @@ import java.util.Set;
 import java.util.UUID;
 
 import robolancer.com.lancerscout.activities.LancerActivity;
+import robolancer.com.lancerscout.activities.pit.PitQueueActivity;
 
 public class BluetoothHelper implements Runnable{
 
@@ -96,6 +97,8 @@ public class BluetoothHelper implements Runnable{
                     Toast.makeText(context, "Sent", Toast.LENGTH_LONG).show();
                     lancerActivity.reset();
                     socket.close();
+
+                    PitQueueActivity.queuedPits.clear();
                 } catch (IOException e) {
                     Toast.makeText(context, "Can not connect to Lancer Scout Server! Please check if server is open or try again.", Toast.LENGTH_LONG).show();
                     showPairedBluetoothDevices(send, data, lancerActivity);

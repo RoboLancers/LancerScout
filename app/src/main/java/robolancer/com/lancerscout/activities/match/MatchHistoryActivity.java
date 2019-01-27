@@ -16,7 +16,6 @@ import robolancer.com.lancerscout.models.match.LancerMatch;
 import robolancer.com.lancerscout.utilities.LancerScoutUtility;
 
 public class MatchHistoryActivity extends LancerActivity {
-
     public static LancerMatch clickedMatch;
     public static ArrayList<LancerMatch> matchHistory = new ArrayList<>();
     ListView matchHistoryListView;

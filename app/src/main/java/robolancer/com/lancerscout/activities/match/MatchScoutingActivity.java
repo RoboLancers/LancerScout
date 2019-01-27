@@ -34,10 +34,6 @@ import robolancer.com.lancerscout.utilities.LancerScoutUtility;
 
 @SuppressWarnings("unchecked")
 public class MatchScoutingActivity extends LancerActivity {
-    BluetoothHelper bluetoothHelper;
-    BluetoothAdapter bluetoothAdapter;
-    Thread bluetoothThread;
-
     EditText matchNumber, teamNumber;
     RadioGroup allianceColor, startingConfiguration;
 
@@ -61,22 +57,6 @@ public class MatchScoutingActivity extends LancerActivity {
 
         findViews();
         setupListeners();
-
-        bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-
-        bluetoothHelper = new BluetoothHelper(this, bluetoothAdapter);
-
-        bluetoothThread = new Thread(bluetoothHelper);
-        bluetoothThread.start();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-
-        if (bluetoothHelper.getPairedDeviceDialog() != null) {
-            bluetoothHelper.getPairedDeviceDialog().cancel();
-        }
     }
 
     @Override

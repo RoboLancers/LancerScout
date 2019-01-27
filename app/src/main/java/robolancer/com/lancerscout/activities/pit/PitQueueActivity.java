@@ -4,6 +4,7 @@ import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
@@ -21,10 +22,6 @@ public class PitQueueActivity extends LancerActivity {
     public static LancerPit clickedPit;
     public static ArrayList<LancerPit> queuedPits = new ArrayList<>();
 
-    BluetoothHelper bluetoothHelper;
-    BluetoothAdapter bluetoothAdapter;
-    Thread bluetoothThread;
-
     ListView pitQueueListView;
     ArrayAdapter<LancerPit> adapter;
 
@@ -38,11 +35,6 @@ public class PitQueueActivity extends LancerActivity {
 
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, queuedPits);
         pitQueueListView.setAdapter(adapter);
-
-        bluetoothHelper = new BluetoothHelper(this, bluetoothAdapter);
-
-        bluetoothThread = new Thread(bluetoothHelper);
-        bluetoothThread.start();
     }
 
     private void findViews() {
@@ -79,11 +71,11 @@ public class PitQueueActivity extends LancerActivity {
                 break;
             case R.id.pit_queued_send:
                 String json;
-                StringBuilder data = new StringBuilder();
+                StringBuilder data = new StringBuilder("PIT-");
 
                 for (LancerPit queuedPit : PitQueueActivity.queuedPits) {
                     json = gson.toJson(queuedPit);
-                    data.append("PIT-").append(json).append("\n");
+                    data.append(json).append(" ");
                     PitHistoryActivity.pitHistory.add(queuedPit);
                 }
 
@@ -97,7 +89,7 @@ public class PitQueueActivity extends LancerActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_pit_history, menu);
+        getMenuInflater().inflate(R.menu.menu_pit_queued, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
